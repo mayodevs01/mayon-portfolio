@@ -5,3 +5,6 @@ dist/
 !.env.example
 *.log
 .vscode/
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
