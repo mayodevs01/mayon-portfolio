@@ -1,4 +1,4 @@
-import {
+﻿import {
   ArrowRight,
   Blocks,
   CheckCircle2,
@@ -135,7 +135,7 @@ function ProjectsSection() {
             </article>
           ))}
         </div>
-        <div className="similar-strip"><div><strong>Want something similar for your business?</strong><span>Let’s discuss your project and build something that works for you.</span></div><ArrowLink to="/contact">Start a Similar Project</ArrowLink></div>
+        <div className="similar-strip"><div><strong>Want something similar for your business?</strong><span>Let's discuss your project and build something that works for your business.</span></div><ArrowLink to="/contact?type=New%20website&demo=Mayon%20portfolio%20examples">Start a Similar Project</ArrowLink></div>
       </div>
     </section>
   )

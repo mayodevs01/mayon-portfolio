@@ -3,7 +3,7 @@ import { ArrowRight, Mail, MessageCircle } from 'lucide-react'
 import { PageHeading } from './PortfolioPages'
 
 const businessTypes = ['Real Estate', 'Ecommerce', 'Restaurant', 'Local Service', 'Professional Firm', 'SaaS / Software', 'Other']
-const projectTypes = ['New website', 'Website redesign', 'Ecommerce store', 'Booking system', 'Dashboard / SaaS', 'Ongoing development']
+const projectTypes = ['New website', 'Website redesign', 'Real Estate Website', 'Ecommerce Store', 'Restaurant Website', 'Booking System', 'Professional Website', 'Dashboard / SaaS', 'Ongoing development']
 
 export function ContactPage() {
   const params = new URLSearchParams(window.location.search)
