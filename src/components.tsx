@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import {
   ArrowRight,
   Check,
+  Command,
   Github,
   Instagram,
   Linkedin,
@@ -36,14 +37,14 @@ export function Header() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
   useEffect(() => setOpen(false), [location.pathname])
-  const links = ['Work', 'Services', 'Industries', 'About', 'Contact']
+  const links = [['Lab', '/work'], ['Capabilities', '/services'], ['Experiments', '/industries'], ['About', '/about'], ['Contact', '/contact']] as const
   return (
     <header className="site-header">
       <div className="container nav-wrap">
-        <Link to="/" className="brand" aria-label="Mayon home">MAYON</Link>
+        <Link to="/" className="brand" aria-label="Mayon home"><Command size={17} /> MAYON<span>®</span></Link>
         <nav className="desktop-nav" aria-label="Main navigation">
-          {links.map((label) => (
-            <NavLink key={label} to={`/${label.toLowerCase()}`}>{label}</NavLink>
+          {links.map(([label, to]) => (
+            <NavLink key={label} to={to}>{label}</NavLink>
           ))}
         </nav>
         <ArrowLink to="/contact" className="header-cta">Start a Project</ArrowLink>
@@ -53,7 +54,7 @@ export function Header() {
       </div>
       {open && (
         <nav className="mobile-nav" aria-label="Mobile navigation">
-          {links.map((label) => <NavLink key={label} to={`/${label.toLowerCase()}`}>{label}</NavLink>)}
+          {links.map(([label, to]) => <NavLink key={label} to={to}>{label}</NavLink>)}
           <ArrowLink to="/contact">Start a Project</ArrowLink>
         </nav>
       )}
@@ -66,22 +67,22 @@ export function Footer() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div>
-          <Link className="brand" to="/">MAYON</Link>
-          <p>Websites and software<br />built for real businesses.</p>
+          <Link className="brand" to="/"><Command size={17} /> MAYON<span>®</span></Link>
+          <p>Creative systems for the internet.</p>
         </div>
-        <div><h3>Navigation</h3><Link to="/work">Work</Link><Link to="/services">Services</Link><Link to="/industries">Industries</Link><Link to="/about">About</Link><Link to="/contact">Contact</Link></div>
-        <div><h3>Services</h3><Link to="/services">Websites</Link><Link to="/services">Ecommerce</Link><Link to="/services">Booking Systems</Link><Link to="/services">SaaS Development</Link></div>
+        <div><h3>Navigate</h3><Link to="/work">The Lab</Link><Link to="/services">Capabilities</Link><Link to="/industries">Experiments</Link><Link to="/about">About</Link><Link to="/contact">Contact</Link></div>
+        <div><h3>Systems</h3><Link to="/services">Brand & Content</Link><Link to="/services">Web & SaaS</Link><Link to="/services">AI Agents</Link><Link to="/services">Automation Ops</Link></div>
         <div className="footer-connect">
           <h3>Connect</h3>
           <a href="mailto:mayodevs01@gmail.com">mayodevs01@gmail.com</a>
           <div className="social-row">
-            <a href="https://github.com/" aria-label="GitHub"><Github size={17} /></a>
-            <a href="https://linkedin.com/" aria-label="LinkedIn"><Linkedin size={17} /></a>
-            <a href="https://instagram.com/" aria-label="Instagram"><Instagram size={17} /></a>
+            <a href="https://github.com/mayodevs01" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17} /></a>
+            <a href="https://www.linkedin.com/in/mayon-thakur-b60903203/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a>
+            <a href="https://www.instagram.com/mayodevs01" target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={17} /></a>
           </div>
         </div>
       </div>
-      <div className="container footer-bottom"><span>© 2026 Mayon. All rights reserved.</span><span>Built with purpose <b>♥</b></span></div>
+      <div className="container footer-bottom"><span>© 2026 Mayon. All rights reserved.</span><span>Signal Forge / IND 26</span></div>
     </footer>
   )
 }
@@ -91,7 +92,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }, [pathname])
-  return <><Header /><main>{children}</main><Footer /></>
+  return <div className="forge-shell"><Header /><main>{children}</main><Footer /></div>
 }
 
 export function SectionIntro({ eyebrow, title, text }: { eyebrow: string; title: ReactNode; text?: string }) {
