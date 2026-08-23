@@ -3,10 +3,10 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "Work", href: "#create" },
-  { label: "Method", href: "#approach" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "CREATE", href: "#create" },
+  { label: "APPROACH", href: "#approach" },
+  { label: "ABOUT", href: "#about" },
+  { label: "CONTACT", href: "#contact" },
 ];
 
 export function Nav() {
@@ -22,22 +22,21 @@ export function Nav() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-6 text-[#201512] transition-all duration-500 md:px-12 md:py-7 lg:px-20",
-          scrolled && "bg-[#e7ddc5]/90 py-4 backdrop-blur-xl",
+          "fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 transition-all duration-500 md:px-12",
+          scrolled && "bg-background/60 py-4 backdrop-blur-xl",
         )}
       >
-        <a href="#top" className="text-display text-xl tracking-tight text-[#201512]">
-          Mayo<span className="text-accent">Devs</span><span className="text-accent">.</span>
+        <a href="#top" className="text-display text-lg tracking-tight text-foreground">
+          MAYODEVS<span className="text-accent">.</span>
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {links.map((l, index) => (
+        <nav className="hidden items-center gap-10 md:flex">
+          {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="group relative mono-label text-[#201512]/70 transition-colors hover:text-[#201512]"
+              className="group relative text-[0.7rem] font-medium uppercase tracking-[0.3em] text-muted-foreground transition-colors hover:text-foreground"
             >
-              <span className="mr-1 text-accent/70">0{index + 1}</span>
               {l.label}
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
             </a>
@@ -49,27 +48,27 @@ export function Nav() {
           className="flex flex-col gap-1.5 md:hidden"
           aria-label="Open menu"
         >
-          <span className="h-px w-7 bg-[#201512]" />
-          <span className="h-px w-7 bg-[#201512]" />
+          <span className="h-px w-7 bg-foreground" />
+          <span className="h-px w-7 bg-foreground" />
         </button>
       </motion.header>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[90] flex flex-col justify-between bg-[#e7ddc5] px-8 py-8 md:hidden"
+            className="fixed inset-0 z-[90] flex flex-col justify-between bg-background px-8 py-8 md:hidden"
             initial={{ clipPath: "circle(0% at 100% 0%)" }}
             animate={{ clipPath: "circle(150% at 100% 0%)" }}
             exit={{ clipPath: "circle(0% at 100% 0%)" }}
             transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
           >
             <div className="flex items-center justify-between">
-              <span className="text-display text-lg text-[#201512]">
-              Mayo<span className="text-accent">Devs</span><span className="text-accent">.</span>
+              <span className="text-display text-lg text-foreground">
+                MAYODEVS<span className="text-accent">.</span>
               </span>
               <button
                 onClick={() => setOpen(false)}
-                className="mono-label text-[#201512]/70"
+                className="text-[0.7rem] uppercase tracking-[0.3em] text-muted-foreground"
               >
                 Close ✕
               </button>
@@ -83,14 +82,14 @@ export function Nav() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 + i * 0.08 }}
-                  className="text-display text-5xl text-[#201512]"
+                  className="text-display text-5xl text-foreground"
                 >
                   {l.label}
                 </motion.a>
               ))}
             </nav>
-            <span className="mono-label text-[#201512]/70">
-              Visual / Web / Experimental
+            <span className="text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
+              AI / Design / Web / Ideas
             </span>
           </motion.div>
         )}

@@ -115,7 +115,7 @@ export function OneIdeaManyForms() {
               md:text-[0.7rem]
             "
           >
-            A field note on possibility
+            One idea. Many forms.
           </span>
 
           <p
@@ -126,7 +126,7 @@ export function OneIdeaManyForms() {
               text-muted-foreground
             "
           >
-            AN IDEA CAN BECOME
+            IT COULD BECOME
           </p>
 
           <div
@@ -172,7 +172,7 @@ export function OneIdeaManyForms() {
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >
-                <span className={formIndex === forms.length - 1 ? "text-editorial text-accent" : ""}>{form}</span>
+                <span className={formIndex === forms.length - 1 ? "text-accent" : ""}>{form}</span>
               </motion.h2>
             ))}
           </div>

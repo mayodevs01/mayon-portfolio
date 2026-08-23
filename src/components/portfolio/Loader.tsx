@@ -1,13 +1,13 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const SESSION_KEY = "mayo_field_notes_intro_seen";
+const SESSION_KEY = "mayodevs_intro_seen";
 
 const readout = [
-  ["EDITION", "MAYO / 01"],
-  ["PLACE", "UNFILED"],
-  ["STARTING WITH", "AN IDEA"],
-  ["STATUS", "OPENING"],
+  ["SYSTEM", "MAYODEVS / 01"],
+  ["STATE", "WAKING UP"],
+  ["INPUT", "IDEA"],
+  ["OUTPUT", "UNKNOWN"],
 ];
 
 export function Loader() {
@@ -66,8 +66,8 @@ export function Loader() {
         >
           <div className="pointer-events-none absolute inset-0 amber-wash opacity-40" />
 
-          <div className="relative flex items-start justify-between mono-label text-muted-foreground">
-            <span>Independent creative practice</span>
+          <div className="relative flex items-start justify-between text-[0.6rem] uppercase tracking-[0.3em] text-muted-foreground">
+            <span>Creative system</span>
             <span className="tabular-nums text-foreground">{String(count).padStart(2, "0")}</span>
           </div>
 
@@ -77,15 +77,15 @@ export function Loader() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              Mayo<span className="text-accent">Devs</span><span className="text-accent">.</span>
+              MAYODEVS<span className="text-accent">.</span>
             </motion.span>
-            <span className="mono-label text-muted-foreground">
-              Turning the page
+            <span className="text-[0.65rem] uppercase tracking-[0.35em] text-muted-foreground">
+              Forming possibility
             </span>
           </div>
 
           <div className="relative flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-x-6 gap-y-1 mono-label text-muted-foreground sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[0.55rem] uppercase tracking-[0.25em] text-muted-foreground sm:grid-cols-4">
               {readout.map(([k, v]) => (
                 <span key={k} className="flex flex-col gap-0.5">
                   <span className="text-muted-foreground/60">{k}</span>
