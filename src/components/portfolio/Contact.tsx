@@ -8,7 +8,7 @@ export function Contact() {
       <div className="absolute inset-0 amber-wash opacity-80" />
       <div className="relative mx-auto max-w-6xl">
         <MaskedHeading
-          lines={["GOT AN IDEA?", "START THERE."]}
+          lines={["GOT A SPARK?", "START THERE."]}
           accentIndex={1}
           className="text-[12vw] leading-[0.9] text-foreground md:text-8xl"
         />
@@ -21,7 +21,7 @@ export function Contact() {
         </Reveal>
         <Reveal delay={0.3}>
           <div className="mt-12">
-            <MagneticButton href={contact.gmailCompose}>Bring the idea →</MagneticButton>
+            <MagneticButton href={contact.gmailCompose}>Bring the spark →</MagneticButton>
           </div>
         </Reveal>
         <Reveal delay={0.4}>
@@ -38,10 +38,10 @@ export function Contact() {
 
       <footer className="relative mx-auto mt-40 flex max-w-6xl flex-col gap-4 border-t border-border pt-8 md:flex-row md:items-center md:justify-between">
         <span className="text-display text-2xl text-foreground">
-          MAYODEVS <span className="text-accent">©</span> {year}
+          Mayo<span className="text-accent">Devs</span> <span className="text-accent">©</span> {year}
         </span>
-        <span className="text-[0.65rem] uppercase tracking-[0.3em] text-muted-foreground">
-          AI / Design / Web / Ideas
+        <span className="mono-label text-muted-foreground">
+          Field Notes / Vol. 01
         </span>
       </footer>
     </Section>
