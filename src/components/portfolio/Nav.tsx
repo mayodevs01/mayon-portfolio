@@ -3,10 +3,10 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "Work", href: "#create" },
-  { label: "Method", href: "#approach" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "CREATE", href: "#create" },
+  { label: "APPROACH", href: "#approach" },
+  { label: "ABOUT", href: "#about" },
+  { label: "CONTACT", href: "#contact" },
 ];
 
 export function Nav() {
@@ -22,22 +22,21 @@ export function Nav() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-6 transition-all duration-500 md:px-12 md:py-7 lg:px-20",
-          scrolled && "bg-background/75 py-4 backdrop-blur-xl",
+          "fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 transition-all duration-500 md:px-12",
+          scrolled && "bg-background/60 py-4 backdrop-blur-xl",
         )}
       >
-        <a href="#top" className="text-display text-xl tracking-tight text-foreground">
-          Mayo<span className="text-accent">Devs</span><span className="text-accent">.</span>
+        <a href="#top" className="text-display text-lg tracking-tight text-foreground">
+          MAYODEVS<span className="text-accent">.</span>
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {links.map((l, index) => (
+        <nav className="hidden items-center gap-10 md:flex">
+          {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="group relative mono-label text-muted-foreground transition-colors hover:text-foreground"
+              className="group relative text-[0.7rem] font-medium uppercase tracking-[0.3em] text-muted-foreground transition-colors hover:text-foreground"
             >
-              <span className="mr-1 text-accent/70">0{index + 1}</span>
               {l.label}
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
             </a>
@@ -65,7 +64,7 @@ export function Nav() {
           >
             <div className="flex items-center justify-between">
               <span className="text-display text-lg text-foreground">
-              Mayo<span className="text-accent">Devs</span><span className="text-accent">.</span>
+                MAYODEVS<span className="text-accent">.</span>
               </span>
               <button
                 onClick={() => setOpen(false)}

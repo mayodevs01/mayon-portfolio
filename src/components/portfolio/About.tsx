@@ -6,7 +6,7 @@ export function About() {
       {/* Why MayoDevs exists */}
       <Section className="py-32 md:py-48">
         <div className="mx-auto max-w-6xl">
-          <SectionLabel className="mb-8">A small studio, still in motion</SectionLabel>
+          <SectionLabel className="mb-8">Why MayoDevs exists</SectionLabel>
           <MaskedHeading
             lines={["THE MEDIUM CHANGES.", "THE CURIOSITY STAYS."]}
             accentIndex={1}
@@ -38,7 +38,7 @@ export function About() {
       <Section id="about" className="py-32 md:py-48">
         <div className="mx-auto max-w-6xl">
           <MaskedHeading
-            lines={["THE PERSON", "BEHIND THE WORK."]}
+            lines={["THE PERSON", "BEHIND IT."]}
             className="text-[12vw] leading-[0.9] text-foreground md:text-8xl"
           />
           <div className="mt-16 grid gap-8 md:grid-cols-12">
@@ -61,8 +61,8 @@ export function About() {
             <div className="md:col-span-5 md:col-start-8">
               <Reveal delay={0.2}>
                 <p className="text-lg leading-relaxed text-foreground md:text-2xl">
-                  I don't have a decade of case studies. I do have taste, a fast
-                  learning curve, and a real drive to make something worth
+                  I don't have a decade of case studies. What I have is taste, a
+                  fast learning curve, and a real drive to make something worth
                   looking at.
                 </p>
               </Reveal>

@@ -64,25 +64,25 @@
 :root {
   --radius: 0.5rem;
 
-  /* Ink, paper and sun-faded clay — intentionally human, not "tech black". */
-  --background: oklch(0.14 0.018 54);
-  --foreground: oklch(0.93 0.018 79);
-  --card: oklch(0.18 0.021 54);
-  --card-foreground: oklch(0.93 0.018 79);
-  --popover: oklch(0.16 0.019 54);
-  --popover-foreground: oklch(0.93 0.018 79);
+  /* Cinematic warm near-black */
+  --background: oklch(0.09 0.004 60);
+  --foreground: oklch(0.93 0.006 80);
+  --card: oklch(0.12 0.004 60);
+  --card-foreground: oklch(0.93 0.006 80);
+  --popover: oklch(0.1 0.004 60);
+  --popover-foreground: oklch(0.93 0.006 80);
 
   /* Off-white as primary */
-  --primary: oklch(0.93 0.018 79);
-  --primary-foreground: oklch(0.14 0.018 54);
-  --secondary: oklch(0.22 0.024 54);
-  --secondary-foreground: oklch(0.93 0.018 79);
-  --muted: oklch(0.22 0.024 54);
-  --muted-foreground: oklch(0.69 0.02 69);
+  --primary: oklch(0.93 0.006 80);
+  --primary-foreground: oklch(0.1 0.004 60);
+  --secondary: oklch(0.16 0.004 60);
+  --secondary-foreground: oklch(0.93 0.006 80);
+  --muted: oklch(0.16 0.004 60);
+  --muted-foreground: oklch(0.58 0.006 70);
 
   /* Warm amber accent */
-  --accent: oklch(0.72 0.14 48);
-  --accent-foreground: oklch(0.15 0.024 48);
+  --accent: oklch(0.8 0.13 66);
+  --accent-foreground: oklch(0.12 0.02 60);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
@@ -103,9 +103,8 @@
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.8 0.13 66);
 
-  --font-display: "DM Serif Display", Georgia, serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, monospace;
+  --font-display: "Anton", "Arial Narrow", sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 @theme inline {
@@ -128,7 +127,6 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    background-image: radial-gradient(circle at 85% 5%, oklch(0.27 0.055 50 / 45%), transparent 28rem);
   }
 
   ::selection {
@@ -154,26 +152,8 @@
 @utility text-display {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 0.88;
-  letter-spacing: -0.045em;
-}
-
-@utility text-editorial {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.055em;
-}
-
-@utility mono-label {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-@utility paper-rule {
-  border-color: color-mix(in oklab, var(--foreground) 20%, transparent);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
 }
 
 @utility hide-scrollbar {
@@ -199,12 +179,4 @@
     color-mix(in oklab, var(--accent) 16%, transparent),
     transparent 72%
   );
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-  }
 }

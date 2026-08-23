@@ -50,9 +50,11 @@ export function Hero() {
       onMouseMove={handleMove}
       className="
         relative
+        flex
         min-h-[100svh]
         w-full
         items-center
+        justify-center
         overflow-hidden
       "
     >
@@ -68,7 +70,7 @@ export function Hero() {
           }}
         />
 
-        <div className="absolute inset-0 bg-background/45" />
+        <div className="absolute inset-0 bg-background/60" />
 
         <div
           className="
@@ -76,7 +78,7 @@ export function Hero() {
             inset-0
             bg-gradient-to-b
             from-background/70
-          via-background/10
+            via-transparent
             to-background
           "
         />
@@ -86,34 +88,74 @@ export function Hero() {
 
       <motion.div
         style={{ opacity }}
-        className="relative z-10 mx-auto grid min-h-[100svh] w-full max-w-[110rem] grid-rows-[1fr_auto] px-6 pb-10 pt-28 sm:px-8 md:px-12 md:pb-12 lg:px-20"
+        className="
+          relative
+          z-10
+          mx-auto
+          flex
+          w-full
+          max-w-[96rem]
+          flex-col
+          items-center
+          px-5
+          pb-28
+          pt-20
+          text-center
+          sm:px-6
+          md:pb-32
+          md:pt-24
+          lg:px-8
+        "
       >
-        <div className="flex flex-col justify-center pb-10 pt-12 md:pb-0 md:pt-16">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.35 }}
-            className="mb-9 flex items-center gap-4 text-muted-foreground"
-          >
-            <span className="h-px w-10 bg-accent" />
-            <span className="mono-label">Mayo / Field Notes — Vol. 01</span>
-          </motion.div>
+        <motion.span
+          initial={{
+            opacity: 0,
+            y: 16,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 1,
+            delay: 0.4,
+          }}
+          className="
+            mb-6
+            text-[0.6rem]
+            font-medium
+            uppercase
+            tracking-[0.32em]
+            text-muted-foreground
+            sm:mb-7
+            sm:text-[0.65rem]
+            sm:tracking-[0.4em]
+            md:mb-8
+            md:text-[0.7rem]
+            md:tracking-[0.45em]
+          "
+        >
+          AI <span className="text-accent">/</span> Design <span className="text-accent">/</span> Web{" "}
+          <span className="text-accent">/</span> Ideas
+        </motion.span>
 
-          <motion.div style={{ x: headlineX }} className="w-full max-w-[110rem]">
+        <motion.div style={{ x: headlineX }} className="w-full">
           <h1
             className="
               text-display
+              mx-auto
               w-full
-              max-w-[1200px]
-              text-[clamp(4.2rem,10.8vw,10.4rem)]
-              leading-[0.84]
+              max-w-[1500px]
+              text-[clamp(3.7rem,11vw,9rem)]
+              leading-[0.91]
+              tracking-[-0.035em]
               text-foreground
             "
           >
             {["AN IDEA", "DOESN'T HAVE TO", "STAY AN IDEA."].map((line, index) => (
               <span key={line} className="block overflow-hidden pb-[0.06em]">
                 <motion.span
-                  className={index === 1 ? "block text-editorial text-accent" : "block"}
+                  className={index === 2 ? "block text-accent" : "block"}
                   initial={{ y: "110%" }}
                   animate={{ y: "0%" }}
                   transition={{
@@ -127,22 +169,73 @@ export function Hero() {
               </span>
             ))}
           </h1>
-          </motion.div>
+        </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 1.1 }}
-            className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground md:ml-[33.333%] md:mt-10 md:text-base"
-          >
-            An independent creative practice for visuals, websites and the strange in-between. Built by Mayon, one idea at a time.
-          </motion.p>
-        </div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 1.2,
+            delay: 1.1,
+          }}
+          className="
+            mt-6
+            max-w-xl
+            px-3
+            text-xs
+            leading-relaxed
+            text-muted-foreground
+            sm:mt-7
+            sm:text-sm
+            md:mt-8
+            md:text-base
+          "
+        >
+          MayoDevs is a creative AI studio turning ideas into visuals, advertisements, graphics, websites and digital
+          experiences.
+        </motion.p>
+      </motion.div>
 
-        <div className="flex items-end justify-between gap-6 border-t paper-rule pt-4">
-          <span className="mono-label max-w-48 text-muted-foreground">AI / design / web / ideas</span>
-          <span className="hidden text-editorial text-2xl text-foreground/90 sm:block">Make it worth looking at.</span>
-          <span className="mono-label text-accent">Scroll ↓</span>
+      <motion.div
+        style={{ opacity }}
+        className="
+          absolute
+          bottom-5
+          left-1/2
+          z-10
+          flex
+          -translate-x-1/2
+          flex-col
+          items-center
+          gap-2
+          sm:bottom-6
+          md:bottom-8
+        "
+      >
+        <span
+          className="
+            text-[0.55rem]
+            uppercase
+            tracking-[0.3em]
+            text-muted-foreground
+            md:text-[0.6rem]
+          "
+        >
+          Scroll
+        </span>
+
+        <div className="h-8 w-px overflow-hidden bg-border md:h-10">
+          <motion.div
+            className="h-4 w-full bg-accent"
+            animate={{
+              y: [-16, 40],
+            }}
+            transition={{
+              duration: 1.8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         </div>
       </motion.div>
     </div>
