@@ -41,7 +41,7 @@ export function Process() {
       >
         <div className="px-6 md:px-12 lg:px-20">
           <MaskedHeading
-            lines={["HOW AN IDEA", "MOVES."]}
+            lines={["HOW AN IDEA", "FINDS ITS FORM."]}
             accentIndex={1}
             className="
               mb-5
@@ -94,12 +94,10 @@ export function Process() {
                 shrink-0
                 flex-col
                 overflow-hidden
-                rounded-lg
                 border
                 border-border
-                bg-card/40
+                bg-card/25
                 p-6
-                backdrop-blur-sm
                 sm:w-[72vw]
                 sm:p-7
                 md:w-[36vw]
