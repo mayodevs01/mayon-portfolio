@@ -1,10 +1,5 @@
-node_modules/
-dist/
-.env
-.env.*
-!.env.example
-*.log
-.vscode/
+.next
+out
+dist
+node_modules
 *.tsbuildinfo
-vite.config.js
-vite.config.d.ts
