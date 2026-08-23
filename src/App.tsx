@@ -16,8 +16,8 @@ function NotFoundPage() { return <section className="not-found"><div><span>404</
 
 export default function App() {
   return <Routes>
+    <Route path="/" element={<Home />} />
     <Route element={<PortfolioLayout />}>
-      <Route path="/" element={<Home />} />
       <Route path="/work" element={<WorkPage />} />
       <Route path="/work/:slug" element={<CaseStudyPage />} />
       <Route path="/services" element={<ServicesPage />} />
