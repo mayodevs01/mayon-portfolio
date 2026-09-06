@@ -1,12 +1,18 @@
-import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useMotionValueEvent,
+} from "framer-motion";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "CREATE", href: "#create" },
-  { label: "APPROACH", href: "#approach" },
-  { label: "ABOUT", href: "#about" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "CREATE", href: "/#create" },
+  { label: "APPROACH", href: "/#approach" },
+  { label: "ABOUT", href: "/#about" },
+  { label: "IDEA BOARD", href: "/ideas", accent: true },
+  { label: "CONTACT", href: "/#contact" },
 ];
 
 export function Nav() {
@@ -26,7 +32,10 @@ export function Nav() {
           scrolled && "bg-background/60 py-4 backdrop-blur-xl",
         )}
       >
-        <a href="#top" className="text-display text-lg tracking-tight text-foreground">
+        <a
+          href="/#top"
+          className="text-display text-lg tracking-tight text-foreground"
+        >
           MAYODEVS<span className="text-accent">.</span>
         </a>
 
@@ -35,7 +44,10 @@ export function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="group relative text-[0.7rem] font-medium uppercase tracking-[0.3em] text-muted-foreground transition-colors hover:text-foreground"
+              className={cn(
+                "group relative text-[0.7rem] font-medium uppercase tracking-[0.3em] transition-colors hover:text-foreground",
+                l.accent ? "text-accent" : "text-muted-foreground",
+              )}
             >
               {l.label}
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
@@ -82,7 +94,10 @@ export function Nav() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 + i * 0.08 }}
-                  className="text-display text-5xl text-foreground"
+                  className={cn(
+                    "text-display text-5xl",
+                    l.accent ? "text-accent" : "text-foreground",
+                  )}
                 >
                   {l.label}
                 </motion.a>
@@ -97,3 +112,4 @@ export function Nav() {
     </>
   );
 }
+
