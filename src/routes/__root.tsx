@@ -34,7 +34,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   return (
@@ -75,36 +75,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: "Mayon Thakur — Developer & Builder | MayoDevs" },
+        { title: "MayoDevs — Creative AI Studio for Ideas" },
         {
           name: "description",
           content:
-            "Mayon Thakur is a developer building useful products, interactive experiences and experiments. Explore selected work from MayoDevs.",
+            "MayoDevs is a creative AI studio turning ideas into advertisements, visuals, graphic design, websites and digital experiences.",
         },
-        { name: "author", content: "Mayon Thakur" },
+        { name: "author", content: "MayoDevs" },
         {
           property: "og:title",
-          content: "Mayon Thakur — Developer & Builder | MayoDevs",
+          content: "MayoDevs — Creative AI Studio for Ideas",
         },
         {
           property: "og:description",
           content:
-            "Products, interactive experiences and experiments by Mayon Thakur.",
+            "MayoDevs turns ideas into advertisements, visuals, graphics, websites and digital experiences using AI and creative direction.",
         },
         { property: "og:type", content: "website" },
-        { property: "og:site_name", content: "Mayon Thakur | MayoDevs" },
+        { property: "og:site_name", content: "MayoDevs" },
         { name: "twitter:card", content: "summary_large_image" },
         {
           name: "twitter:title",
-          content: "Mayon Thakur — Developer & Builder | MayoDevs",
+          content: "MayoDevs — Creative AI Studio for Ideas",
         },
         {
           name: "twitter:description",
           content:
-            "Products, interactive experiences and experiments by Mayon Thakur.",
+            "MayoDevs turns ideas into advertisements, visuals, graphics, websites and digital experiences using AI and creative direction.",
         },
-        { property: "og:image", content: "https://mayon.lol/mayon-sculpt.png" },
-        { name: "twitter:image", content: "https://mayon.lol/mayon-sculpt.png" },
+        { property: "og:image", content: "/og-image.jpg" },
+        { name: "twitter:image", content: "/og-image.jpg" },
       ],
       links: [
         {
