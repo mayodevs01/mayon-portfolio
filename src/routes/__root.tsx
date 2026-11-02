@@ -34,7 +34,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   return (
@@ -75,33 +75,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: "MayoDevs — Creative AI Studio for Ideas" },
+        { title: "Mayon Thakur | MayoDevs — Developer & StudyElo Founder" },
         {
           name: "description",
           content:
-            "MayoDevs is a creative AI studio turning ideas into advertisements, visuals, graphic design, websites and digital experiences.",
+            "Mayon Thakur — developer, founder of StudyElo.online and aspiring entrepreneur. Explore projects, web skills and a rigged minigame.",
         },
         { name: "author", content: "MayoDevs" },
         {
           property: "og:title",
-          content: "MayoDevs — Creative AI Studio for Ideas",
+          content: "Mayon Thakur | MayoDevs — Developer & StudyElo Founder",
         },
         {
           property: "og:description",
           content:
-            "MayoDevs turns ideas into advertisements, visuals, graphics, websites and digital experiences using AI and creative direction.",
+            "Explore the projects and programming skills of Mayon Thakur, founder of StudyElo.online.",
         },
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: "MayoDevs" },
         { name: "twitter:card", content: "summary_large_image" },
         {
           name: "twitter:title",
-          content: "MayoDevs — Creative AI Studio for Ideas",
+          content: "Mayon Thakur | MayoDevs — Developer & StudyElo Founder",
         },
         {
           name: "twitter:description",
           content:
-            "MayoDevs turns ideas into advertisements, visuals, graphics, websites and digital experiences using AI and creative direction.",
+            "Explore the projects and programming skills of Mayon Thakur, founder of StudyElo.online.",
         },
         { property: "og:image", content: "/og-image.jpg" },
         { name: "twitter:image", content: "/og-image.jpg" },
@@ -146,4 +146,3 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
-

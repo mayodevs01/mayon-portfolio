@@ -1,32 +1,26 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Loader } from "@/components/portfolio/Loader";
-import { Nav } from "@/components/portfolio/Nav";
-import { Hero } from "@/components/portfolio/Hero";
-import { OneIdeaManyForms } from "@/components/portfolio/OneIdeaManyForms";
-import { CreativeWorlds } from "@/components/portfolio/CreativeWorlds";
-import { Approach } from "@/components/portfolio/Approach";
-import { Process } from "@/components/portfolio/Process";
-import { About } from "@/components/portfolio/About";
-import { Contact } from "@/components/portfolio/Contact";
-
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-function Index() {
-  return (
-    <>
-      <Loader />
-      <Nav />
-      <main className="relative overflow-x-clip">
-        <Hero />
-        <OneIdeaManyForms />
-        <CreativeWorlds />
-        <Approach />
-        <Process />
-        <About />
-        <Contact />
-      </main>
-    </>
-  );
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect, useRef, useState } from 'react';
+import './console.css';
+export const Route = createFileRoute('/')({ component: Desktop });
+const tabs = ['Profile', 'Stack', 'Projects', 'Play'] as const;
+const roasts = ['Access denied. Your confidence had admin privileges. You did not.', 'Skill issue detected. The game also cheats. Mostly that second part.', 'You were so close. That is a lie, but a supportive one.', 'Your victory has been moved to /dev/null.', 'Nice try. The final boss is the source code.'];
+function Game() {
+ const [mode,setMode]=useState<'ready'|'playing'|'lost'>('ready'); const [time,setTime]=useState(10); const [dodges,setDodges]=useState(0); const [round,setRound]=useState(0); const [pos,setPos]=useState({x:48,y:43});
+ const board=useRef<HTMLDivElement>(null); const hits=useRef(0);
+ useEffect(()=>{if(mode!=='playing')return; const id=setInterval(()=>setTime(t=>{if(t<=1){setMode('lost');return 0;}return t-1;}),1000);return()=>clearInterval(id);},[mode]);
+ function evade(){ if(mode!=='playing')return;hits.current++;setDodges(hits.current);setPos({x:10+Math.random()*70,y:12+Math.random()*63});if(hits.current>=7)setMode('lost'); }
+ function start(){hits.current=0;setDodges(0);setTime(10);setPos({x:48,y:43});setRound(r=>r+1);setMode('playing');}
+ return <div className="game-pane"><div className="pane-heading"><div><span className="overline">SIDE QUEST / 004</span><h2>Catch root.</h2></div><span className="warning-label">RIGGED BY DESIGN</span></div><p className="muted game-intro">Catch the green node before the timer runs out. The node has other plans.</p><div className="game-board" ref={board}><div className="board-grid" aria-hidden="true"/>{mode==='ready'&&<div className="game-overlay"><span className="game-symbol">⌘</span><h3>One node. Zero chance.</h3><p>An impossible little game. You have been warned.</p><button className="solid" onClick={start}>I can beat this ↗</button></div>}{mode==='playing'&&<><span className="game-hud">TIME {String(time).padStart(2,'0')}s <span>EVASIONS {dodges}</span></span><button className="root-node" style={{left:pos.x+'%',top:pos.y+'%'}} onPointerEnter={evade} onPointerDown={evade} onClick={evade} onFocus={evade} aria-label="Catch root node">⌘</button><span className="board-caption">THE HOUSE ALWAYS WINS_</span></>}{mode==='lost'&&<div className="game-overlay" role="status"><span className="error-code">403 / YOU LOST</span><h3>System outplayed you.</h3><p>{roasts[round%roasts.length]}</p><button className="solid" onClick={start}>Lose again ↻</button></div>}</div><span className="game-foot">No scoreboards. No stakes. Just suspiciously fast pixels.</span></div>;
+}
+function Desktop(){
+ const [active,setActive]=useState<typeof tabs[number]>('Profile'); const [sound,setSound]=useState(false); const audio=useRef<AudioContext|null>(null);
+ function select(tab:typeof tabs[number]){setActive(tab);if(sound){try{const ctx=audio.current??new AudioContext();audio.current=ctx;const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.value=420+tabs.indexOf(tab)*100;gain.gain.setValueAtTime(.025,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.08);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.08);}catch{setSound(false);}}}
+ useEffect(()=>()=>{void audio.current?.close();},[]);
+ return <main className="night-desktop"><div className="ambient" aria-hidden="true"><div className="orb orb-one"/><div className="orb orb-two"/><div className="orb orb-three"/><div className="terrain"/><div className="star-field"/></div><div className="desktop-top"><a className="desktop-brand" href="#" aria-label="MayoDevs home" onClick={()=>select('Profile')}><span>⌘</span> MAYODEVS<span className="brand-small">/ PERSONAL TERMINAL</span></a><button className="sound-switch" aria-pressed={sound} aria-label={sound?'Mute interface sounds':'Enable interface sounds'} onClick={()=>setSound(!sound)}>{sound?'♪ SOUND ON':'♪ SOUND OFF'}</button></div>
+ <section className="console-window" aria-label="Mayon Thakur portfolio"><header className="window-bar"><div className="traffic" aria-hidden="true"><i/><i/><i/></div><span>mayon@internet : ~/{active.toLowerCase()}</span><span className="secure"><i/> CONNECTION LOCAL</span></header><div className="console-main"><aside className="identity"><div className="avatar-wrap"><div className="avatar">M<span>_</span></div><span className="avatar-badge">BUILD MODE</span></div><span className="overline identity-label">THE HUMAN BEHIND THE HANDLE</span><h1>Mayon<span>.</span></h1><p className="full-name">Mayon Thakur / @mayodevs01</p><p className="identity-tagline">Ideas in my head.<br/>Products on the internet.</p><div className="status-card"><span className="status-dot"/><div><strong>Founder of StudyElo</strong><span>Aspiring entrepreneur</span></div><span className="status-arrow">↗</span></div><div className="social-row"><a href="https://github.com/mayodevs01" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/mayon-thakur/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="mailto:mayodevs01@gmail.com">Email ↗</a></div></aside><div className="workspace"><nav className="console-tabs" aria-label="Portfolio sections">{tabs.map((t,i)=><button key={t} aria-pressed={active===t} onClick={()=>select(t)} className={active===t?'selected':''}><span>0{i+1}</span>{t}{t==='Play'&&<i/>}</button>)}</nav><div className="pane" key={active}>
+ {active==='Profile'&&<><span className="overline">HELLO, INTERNET / 001</span><h2>I turn <em>what if</em><br/>into something real.</h2><p className="bio">I’m a developer, the founder of <a href="https://studyelo.online" target="_blank" rel="noopener noreferrer">StudyElo.online ↗</a>, and an aspiring entrepreneur. MayoDevs is my corner of the internet for the things I build.</p><div className="capabilities"><span>WHAT I CAN DO</span><div><b>01</b><p>Build web products<small>From an idea to a usable, deployed site.</small></p></div><div><b>02</b><p>Design digital experiences<small>Responsive interfaces, landing pages, and visual direction.</small></p></div><div><b>03</b><p>Experiment with AI<small>Use AI tools, understand the output, and refine the result.</small></p></div></div><button className="inline-action" onClick={()=>select('Projects')}>Explore my work <span>↗</span></button></>}
+ {active==='Stack'&&<><span className="overline">TOOLS OF THE TRADE / 002</span><h2>Speak code.<br/><em>Ship ideas.</em></h2><p className="muted stack-intro">Languages used across my web projects.</p><div className="language-grid">{[['JS','JavaScript','Web interactions'],['TS','TypeScript','Typed application code'],['<>','HTML','Structure & semantics'],['#','CSS','Interfaces & motion']].map(([mark,name,desc])=><div className="language" key={name}><b>{mark}</b><div><strong>{name}</strong><span>{desc}</span></div><i>↗</i></div>)}</div><div className="tool-strip"><span>ALSO IN THE TOOLBOX</span><p>React · Git & GitHub · Responsive design · AI tools</p></div></>}
+ {active==='Projects'&&<><span className="overline">SELECTED BUILDS / 003</span><h2>From idea<br/>to <em>live URL.</em></h2><div className="project-list"><a href="https://studyelo.online/" target="_blank" rel="noopener noreferrer" className="project-link"><span className="project-icon">SE</span><div><span className="project-label">FOUNDER / STUDY PRODUCTIVITY</span><h3>StudyElo.online</h3><p>A study productivity platform for focus, organisation, and consistency.</p></div><b>↗</b></a><a href="https://github.com/mayodevs01/mayon-portfolio" target="_blank" rel="noopener noreferrer" className="project-link"><span className="project-icon">M_</span><div><span className="project-label">DESIGN / DEVELOPMENT</span><h3>MayoDevs portfolio</h3><p>My personal space for web development, visual work, and experiments.</p></div><b>↗</b></a></div><a className="inline-action" href="https://github.com/mayodevs01" target="_blank" rel="noopener noreferrer">More on GitHub <span>↗</span></a></>}
+ {active==='Play'&&<Game/>}
+ </div></div></div><footer className="console-footer"><span><i/> ALL SYSTEMS CURIOUS</span><span>MAYON THAKUR © {new Date().getFullYear()}</span><span>ESCAPE THE ORDINARY_</span></footer></section><div className="desktop-bottom"><span>EST. ONLINE / MAYODEVS</span><span>BUILT FROM CURIOSITY <i>✳</i></span></div></main>;
 }
