@@ -103,15 +103,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           content:
             "Explore the projects and programming skills of Mayon Thakur, founder of StudyElo.online.",
         },
-        { property: "og:image", content: "/og-image.jpg" },
-        { name: "twitter:image", content: "/og-image.jpg" },
+        { property: "og:image", content: "https://mayon.lol/profile-plush.png" },
+        { name: "twitter:image", content: "https://mayon.lol/profile-plush.png" },
       ],
       links: [
         {
           rel: "stylesheet",
           href: appCss,
         },
-        { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+        { rel: "icon", href: "/mayon-logo.svg", type: "image/svg+xml" },
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         {
           rel: "preconnect",

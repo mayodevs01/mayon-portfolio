@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Colorful M on white square">
+ <rect x="1" y="1" width="62" height="62" rx="12" fill="#fff"/>
+ <path d="M16 15h7v34h-7z" fill="#4285F4"/>
+ <path d="M23 15l9 13v12l-9-13z" fill="#EA4335"/>
+ <path d="M41 15l-9 13v12l9-13z" fill="#FBBC05"/>
+ <path d="M41 15h7v34h-7z" fill="#34A853"/>
+</svg>
