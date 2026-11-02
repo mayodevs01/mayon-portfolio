@@ -75,16 +75,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: "Mayon Thakur | MayoDevs — Developer & StudyElo Founder" },
+        { title: "Mayon Thakur — Developer & StudyElo Founder" },
         {
           name: "description",
           content:
-            "Mayon Thakur — developer, founder of StudyElo.online and aspiring entrepreneur. Explore projects, web skills and a rigged minigame.",
+            "Mayon Thakur — developer, founder of StudyElo.online and aspiring entrepreneur. Explore projects, web skills and a searchable résumé.",
         },
-        { name: "author", content: "MayoDevs" },
+        { name: "author", content: "Mayon Thakur" },
         {
           property: "og:title",
-          content: "Mayon Thakur | MayoDevs — Developer & StudyElo Founder",
+          content: "Mayon Thakur — Developer & StudyElo Founder",
         },
         {
           property: "og:description",
@@ -92,11 +92,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             "Explore the projects and programming skills of Mayon Thakur, founder of StudyElo.online.",
         },
         { property: "og:type", content: "website" },
-        { property: "og:site_name", content: "MayoDevs" },
+        { property: "og:site_name", content: "Mayon Thakur" },
         { name: "twitter:card", content: "summary_large_image" },
         {
           name: "twitter:title",
-          content: "Mayon Thakur | MayoDevs — Developer & StudyElo Founder",
+          content: "Mayon Thakur — Developer & StudyElo Founder",
         },
         {
           name: "twitter:description",
