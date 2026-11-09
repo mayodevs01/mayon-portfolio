@@ -1,0 +1,486 @@
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=Inter:wght@400;500;600&display=swap");
+.deck-site {
+  min-height: 100svh;
+  background: #10161d;
+  color: #f2eadb;
+  font-family: Inter, sans-serif;
+  padding: 0 clamp(18px, 5vw, 70px);
+  line-height: 1.6;
+}
+.deck-header {
+  max-width: 1160px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+  border-bottom: 1px solid #494333;
+}
+.deck-brand {
+  font:
+    28px Newsreader,
+    Georgia,
+    serif;
+  letter-spacing: 3px;
+}
+.deck-brand span {
+  font:
+    11px Inter,
+    sans-serif;
+  border-left: 1px solid #c9ac75;
+  padding-left: 18px;
+  margin-left: 14px;
+}
+.deck-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #b9a16d;
+  padding: 9px 15px;
+  font-size: 12px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.deck-outline:hover {
+  background: #d7bb80;
+  color: #10161d;
+}
+.deck-main {
+  max-width: 1040px;
+  margin: 35px auto 25px;
+}
+.deck-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  font-size: 10px;
+  letter-spacing: 1.6px;
+  color: #c6b489;
+  margin-bottom: 22px;
+}
+.deck-stack {
+  position: relative;
+  isolation: isolate;
+  margin: 0 10px 30px;
+}
+.deck-stack:before,
+.deck-stack:after {
+  content: "";
+  position: absolute;
+  inset: 16px -8px -12px;
+  border: 1px solid #61563e;
+  background: #17202a;
+  border-radius: 14px;
+  z-index: -1;
+  transform: rotate(1.1deg);
+}
+.deck-stack:after {
+  inset: 27px 7px -21px;
+  transform: rotate(-1.1deg);
+  z-index: -2;
+  background: #1e2730;
+}
+.deck-card {
+  background: linear-gradient(130deg, #202a35, #161e27);
+  border: 1px solid #776647;
+  border-radius: 12px;
+  padding: clamp(24px, 4vw, 48px);
+  min-height: 570px;
+  box-shadow: 0 25px 70px #0004;
+  animation: deal-forward 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.deck-card.back {
+  animation-name: deal-back;
+}
+@keyframes deal-forward {
+  from {
+    opacity: 0.25;
+    transform: translateY(28px) translateX(24px) rotate(1.5deg) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes deal-back {
+  from {
+    opacity: 0.25;
+    transform: translateY(20px) translateX(-24px) rotate(-1.5deg) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.deck-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #d7bb80;
+  margin-bottom: 24px;
+}
+.deck-eyebrow span {
+  font-size: 20px;
+}
+.deck-card h1,
+.deck-card h2 {
+  font:
+    500 clamp(42px, 6vw, 76px)/0.98 Newsreader,
+    Georgia,
+    serif;
+  letter-spacing: -2px;
+  margin: 0 0 22px;
+}
+.deck-card h1 {
+  font-size: clamp(65px, 9vw, 108px);
+}
+.deck-card em {
+  font-weight: 400;
+  color: #d7bb80;
+}
+.deck-card p {
+  color: #c6c9cb;
+  font-size: 14px;
+  max-width: 660px;
+}
+.deck-card .deck-subtitle {
+  font:
+    24px/1.35 Newsreader,
+    Georgia,
+    serif;
+  color: #eee7db;
+  margin-bottom: 16px;
+}
+.deck-intro {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 45px;
+  align-items: center;
+}
+.deck-portrait {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  object-position: center 42%;
+  border: 1px solid #a58e61;
+  padding: 5px;
+}
+.deck-intro figcaption {
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  color: #aab0b4;
+  margin-top: 12px;
+}
+.deck-link {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  font:
+    22px Newsreader,
+    Georgia,
+    serif;
+  border-bottom: 1px solid #c9ac75;
+  padding: 8px 0;
+  margin-top: 22px;
+  cursor: pointer;
+}
+.deck-skills,
+.deck-story {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-top: 30px;
+}
+.deck-card h3 {
+  font-size: 10px;
+  letter-spacing: 1.3px;
+  color: #ddc692;
+  margin-bottom: 12px;
+}
+.deck-tag {
+  display: inline-block;
+  border: 1px solid #53606a;
+  padding: 7px 12px;
+  margin: 0 6px 8px 0;
+  font-size: 13px;
+}
+.deck-skills section {
+  border-top: 1px solid #665b45;
+  padding-top: 20px;
+}
+.deck-card .deck-note {
+  font-size: 11px;
+  color: #a8afb5;
+  margin-top: 20px;
+}
+.deck-project-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.deck-project-heading h2 {
+  font-size: 50px;
+}
+.deck-project-heading h2 em {
+  font-size: 30px;
+}
+.deck-product {
+  width: 100%;
+  border: 1px solid #61563e;
+  margin-top: 20px;
+}
+.deck-story p {
+  font-size: 12px;
+}
+.deck-social-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  color: #d7bb80;
+  margin-bottom: 24px;
+}
+.deck-profile-banner {
+  height: 80px;
+  background: linear-gradient(110deg, #234254, #333c50);
+  border: 1px solid #4f6874;
+}
+.deck-profile {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: -25px 20px 20px;
+}
+.deck-profile img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center 38%;
+  border-radius: 50%;
+  border: 5px solid #1b2530;
+}
+.deck-profile h2 {
+  font-size: 38px;
+  margin: 30px 0 6px;
+}
+.deck-profile .deck-subtitle {
+  font-size: 19px;
+}
+.deck-profile-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+.deck-profile-details span {
+  border: 1px solid #58626b;
+  padding: 7px 10px;
+  font-size: 12px;
+}
+.deck-repos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 0;
+}
+.deck-repos a {
+  border: 1px solid #4c5963;
+  padding: 14px;
+  min-width: 0;
+}
+.deck-repos strong {
+  font-size: 13px;
+  color: #ddc692;
+  overflow-wrap: anywhere;
+}
+.deck-repos p {
+  font-size: 11px;
+  margin: 7px 0;
+}
+.deck-repos span {
+  font-size: 10px;
+  color: #adb9c1;
+}
+.deck-repos a:hover {
+  border-color: #d7bb80;
+}
+.deck-contribution-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+}
+.deck-activity {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 10px);
+  grid-auto-columns: 10px;
+  gap: 3px;
+  overflow-x: auto;
+  padding-bottom: 7px;
+}
+.deck-activity span {
+  background: #34404a;
+  border-radius: 2px;
+}
+.deck-activity [data-level="1"] {
+  background: #506944;
+}
+.deck-activity [data-level="2"] {
+  background: #78964c;
+}
+.deck-activity [data-level="3"] {
+  background: #aac05b;
+}
+.deck-activity [data-level="4"] {
+  background: #d7e688;
+}
+.deck-mail {
+  margin-top: 25px;
+  max-width: 660px;
+}
+.deck-mail label {
+  display: block;
+  font-size: 12px;
+  color: #d7bb80;
+  margin-bottom: 16px;
+}
+.deck-mail input,
+.deck-mail textarea {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  background: #101820;
+  border: 1px solid #59616a;
+  color: #fff;
+  padding: 12px;
+  font:
+    14px Inter,
+    sans-serif;
+  resize: vertical;
+}
+.deck-mail a {
+  text-decoration: underline;
+}
+.deck-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 10px;
+}
+.deck-controls > button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #e7d6b4;
+  font-size: 12px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.deck-controls > button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.deck-dots {
+  display: flex;
+}
+.deck-dots button {
+  width: 26px;
+  height: 40px;
+  position: relative;
+  cursor: pointer;
+}
+.deck-dots button:after {
+  content: "";
+  position: absolute;
+  inset: 17px 9px;
+  background: #5d6670;
+  border-radius: 50%;
+}
+.deck-dots button[aria-current]:after {
+  background: #e0c58c;
+}
+.deck-footer {
+  max-width: 1160px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  color: #a3a9ad;
+  font-size: 10px;
+}
+.deck-site :focus-visible {
+  outline: 2px solid #d7bb80;
+  outline-offset: 5px;
+}
+@media (max-width: 700px) {
+  .deck-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .deck-portrait {
+    height: 260px;
+    width: 220px;
+    max-width: 100%;
+  }
+  .deck-topline {
+    font-size: 9px;
+    letter-spacing: 0.6px;
+  }
+  .deck-skills,
+  .deck-story {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .deck-repos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .deck-card {
+    min-height: 600px;
+  }
+  .deck-project-heading {
+    display: block;
+  }
+  .deck-profile {
+    margin-left: 0;
+    gap: 12px;
+  }
+  .deck-profile img {
+    width: 70px;
+    height: 70px;
+  }
+  .deck-profile h2 {
+    font-size: 28px;
+  }
+  .deck-profile .deck-subtitle {
+    font-size: 16px;
+  }
+  .deck-brand span {
+    font-size: 9px;
+    padding-left: 9px;
+    margin-left: 7px;
+  }
+  .deck-header .deck-outline {
+    font-size: 10px;
+    padding: 8px;
+  }
+  .deck-controls {
+    padding-inline: 0;
+  }
+  .deck-controls > button {
+    font-size: 10px;
+    gap: 4px;
+  }
+  .deck-dots button {
+    width: 20px;
+  }
+  .deck-dots button:after {
+    inset-inline: 7px;
+  }
+}

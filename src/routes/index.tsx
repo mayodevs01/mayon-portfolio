@@ -1,355 +1,355 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowDown, ArrowUp, ArrowUpRight, Download } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
-import "./archive.css";
+import { useState, type FormEvent } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Github,
+  Linkedin,
+  Mail,
+} from "lucide-react";
+import repos from "@/data/github-repos.json";
+import contributions from "@/data/github-contributions.json";
+import "./deck.css";
 
 export const Route = createFileRoute("/")({ component: Portfolio });
-
-const chapters = [
-  { id: "intro", number: "01", title: "Introduction" },
-  { id: "projects", number: "02", title: "Featured work", nav: "Work" },
-  { id: "about", number: "03", title: "About", nav: "About" },
-  { id: "contact", number: "04", title: "Contact", nav: "Contact" },
-] as const;
-
-type Chapter = (typeof chapters)[number];
-type ChapterId = Chapter["id"];
-
-const resume = "/Mayon-Thakur-Resume.pdf";
-const studyElo = "https://studyelo.online/";
-const email = "mayodevs01@gmail.com";
-
+const titles = [
+  "Introduction",
+  "My toolkit",
+  "StudyElo",
+  "LinkedIn",
+  "GitHub",
+  "Your idea",
+];
 function Portfolio() {
-  const [current, setCurrent] = useState<ChapterId>("intro");
-
-  useEffect(() => {
-    const sections = chapters
-      .flatMap(({ id }) => {
-        const section = document.getElementById(id);
-        return section ? [{ id, section }] : [];
-      })
-      .reverse();
-    let frame = 0;
-
-    function updateChapter() {
-      frame = 0;
-      const viewport = window.innerHeight;
-      const readingLine = Math.min(viewport * 0.37, 260);
-      const positions = sections.map(({ id, section }) => ({
-        id,
-        section,
-        top: section.getBoundingClientRect().top,
-      }));
-      const active = positions.find(({ top }) => top <= readingLine);
-
-      for (const { section, top } of positions) {
-        // Reveal the incoming slide between the bottom and the upper third.
-        const progress = Math.min(
-          1,
-          Math.max(0, (viewport * 0.94 - top) / (viewport * 0.62)),
-        );
-        const eased = (1 - (1 - progress) ** 2).toFixed(3);
-        if (section.style.getPropertyValue("--slide-progress") !== eased) {
-          section.style.setProperty("--slide-progress", eased);
-        }
-      }
-
-      const atBottom =
-        window.scrollY > 0 &&
-        window.scrollY + viewport >= document.documentElement.scrollHeight - 2;
-      setCurrent(atBottom ? "contact" : (active?.id ?? "intro"));
-    }
-
-    function onScroll() {
-      if (!frame) frame = requestAnimationFrame(updateChapter);
-    }
-
-    updateChapter();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(frame);
-    };
-  }, []);
-
+  const [card, setCard] = useState(0);
+  const [direction, setDirection] = useState("forward");
+  const [name, setName] = useState("");
+  const [idea, setIdea] = useState("");
+  function go(next: number) {
+    setDirection(next > card ? "forward" : "back");
+    setCard(next);
+  }
+  function compose(event: FormEvent) {
+    event.preventDefault();
+    window.location.href =
+      "mailto:mayodevs01@gmail.com?subject=" +
+      encodeURIComponent("Project idea from " + name.trim()) +
+      "&body=" +
+      encodeURIComponent("Hi Mayon,\n\n" + idea.trim() + "\n\n" + name.trim());
+  }
   return (
-    <div className="archive">
-      <a className="archive-skip" href="#portfolio-main">
-        Skip to content
-      </a>
-      <header className="archive-header">
-        <div className="archive-header-inner archive-wrap">
-          <a
-            className="archive-brand"
-            href="#intro"
-            aria-label="mayon.lol home"
-          >
-            <span className="archive-monogram" aria-hidden="true">
-              MT
-            </span>
-            <span>mayon.lol</span>
-          </a>
-          <nav className="archive-nav" aria-label="Portfolio chapters">
-            {chapters.map(
-              (chapter) =>
-                "nav" in chapter && (
-                  <a
-                    key={chapter.id}
-                    href={`#${chapter.id}`}
-                    aria-current={
-                      current === chapter.id ? "location" : undefined
-                    }
-                  >
-                    {chapter.nav}
-                  </a>
-                ),
-            )}
-          </nav>
-          <ResumeLink />
-        </div>
-      </header>
-
-      <main
-        id="portfolio-main"
-        className="archive-wrap archive-timeline"
-        tabIndex={-1}
-      >
-        <ChapterSection
-          chapter={chapters[0]}
-          current={current}
-          className="archive-intro"
-        >
-          <div className="archive-hero-grid">
-            <div>
-              <h1>
-                Mayon
-                <br />
-                Thakur
-              </h1>
-              <p className="archive-role">
-                SaaS developer &amp; founder of{" "}
-                <a href={studyElo}>StudyElo.online</a>
-              </p>
-              <p className="archive-lead">
-                I’m a first-year B.Tech student building software around real
-                problems, starting with how students study.
-              </p>
-              <a className="archive-link" href="#projects">
-                Explore StudyElo <ArrowDown aria-hidden="true" />
-              </a>
-            </div>
-            <figure className="archive-portrait">
-              <div className="archive-photo-frame">
-                <img
-                  src="/mayon-thakur.webp"
-                  width="760"
-                  height="1352"
-                  alt="Mayon Thakur wearing black glasses"
-                  fetchPriority="high"
-                />
-              </div>
-              <figcaption>
-                <span>Fig. 01</span>
-                <span>Mayon Thakur</span>
-              </figcaption>
-            </figure>
-          </div>
-        </ChapterSection>
-
-        <ChapterSection
-          chapter={chapters[1]}
-          current={current}
-          className="archive-work"
-        >
-          <div className="archive-work-heading">
-            <div>
-              <h2>StudyElo</h2>
-              <p className="archive-deck">
-                From starting a session to building a routine.
-              </p>
-            </div>
-            <span className="archive-project-role">Founder / Developer</span>
-          </div>
-          <div className="archive-project-grid">
-            <div className="archive-project-story">
-              <div>
-                <h3>The problem</h3>
-                <p>
-                  It’s easy to spend more time setting up a study session than
-                  getting started.
-                </p>
-              </div>
-              <div>
-                <h3>The build</h3>
-                <p>
-                  I put a Pomodoro timer, a focus room, and study-time tracking
-                  in one place.
-                </p>
-              </div>
-              <div>
-                <h3>The lesson</h3>
-                <p>
-                  The first few seconds matter. Make it easy to start, then give
-                  students a reason to come back.
-                </p>
-              </div>
-            </div>
-            <div>
-              <figure className="archive-product">
-                <img
-                  src="/studyelo-focus.webp"
-                  width="1280"
-                  height="586"
-                  alt="StudyElo’s Pomodoro focus room with a 90-minute timer and a nighttime desk backdrop"
-                  decoding="async"
-                />
-                <figcaption>
-                  <span>Fig. 02 / Pomodoro focus room</span>
-                  <span>studyelo.online</span>
-                </figcaption>
-              </figure>
-              <div className="archive-actions">
-                <a className="archive-link" href="#case-study">
-                  Read the case study <ArrowDown aria-hidden="true" />
-                </a>
-                <a className="archive-link" href={studyElo}>
-                  Visit StudyElo <ArrowUpRight aria-hidden="true" />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div id="case-study" className="archive-case" tabIndex={-1}>
-            <p className="archive-label">Inside the build</p>
-            <h3>What happens after you press Start?</h3>
-            <div className="archive-case-grid">
-              <p>
-                StudyElo gives a session a beginning and an end. The focus room
-                puts the timer up front, and Pomodoro breaks give students a
-                natural point to pause before the next round. Study-time
-                tracking makes the work visible across sessions.
-              </p>
-              <p>
-                I took StudyElo from idea to deployment, working on the
-                responsive interface, study tools, and content. Once it was
-                live, I kept refining how the pieces fit together around the
-                same question: how quickly can someone get back to studying?
-              </p>
-            </div>
-          </div>
-        </ChapterSection>
-
-        <ChapterSection
-          chapter={chapters[2]}
-          current={current}
-          className="archive-about"
-        >
-          <h2>About me</h2>
-          <div className="archive-about-grid">
-            <div className="archive-about-copy">
-              <p>
-                I’m a first-year B.Tech Computer Science student at Dr. A.P.J.
-                Abdul Kalam Technical University, a SaaS developer, and the
-                founder of StudyElo.online.
-              </p>
-              <p>
-                I’ve won five hackathons. I’m looking to work with people who
-                can point to a real problem and want to build something that
-                makes it easier to solve.
-              </p>
-            </div>
-            <dl className="archive-facts">
-              <div>
-                <dt>Education</dt>
-                <dd>B.Tech Computer Science · First year</dd>
-              </div>
-              <div>
-                <dt>Hackathons</dt>
-                <dd>5 wins</dd>
-              </div>
-              <div>
-                <dt>Tools</dt>
-                <dd>TypeScript, React, Node.js, SQLite, Git</dd>
-              </div>
-            </dl>
-          </div>
-        </ChapterSection>
-
-        <ChapterSection
-          chapter={chapters[3]}
-          current={current}
-          className="archive-contact"
-        >
-          <h2>Let’s build something useful.</h2>
-          <p className="archive-lead">
-            Have a problem you’re working on? Tell me who it affects and what
-            you’ve tried so far.
-          </p>
-          <a className="archive-link archive-email" href={`mailto:${email}`}>
-            {email} <ArrowUpRight aria-hidden="true" />
-          </a>
-          <div className="archive-actions">
-            <a className="archive-link" href="https://github.com/mayodevs01">
-              GitHub <ArrowUpRight aria-hidden="true" />
-            </a>
-            <a
-              className="archive-link"
-              href="https://www.linkedin.com/in/mayon-thakur/"
-            >
-              LinkedIn <ArrowUpRight aria-hidden="true" />
-            </a>
-            <ResumeLink />
-          </div>
-        </ChapterSection>
-      </main>
-
-      <footer className="archive-footer archive-wrap">
-        <span>© {new Date().getFullYear()} Mayon Thakur</span>
-        <a className="archive-link" href="#intro">
-          Back to top <ArrowUp aria-hidden="true" />
+    <div className="deck-site">
+      <header className="deck-header">
+        <a href="/" className="deck-brand">
+          MT <span>MAYON.LOL</span>
         </a>
+        <a href="/Mayon-Thakur-Resume.pdf" download className="deck-outline">
+          Download résumé ↗
+        </a>
+      </header>
+      <main className="deck-main">
+        <div className="deck-topline">
+          <span>A FEW THINGS ABOUT ME</span>
+          <span aria-live="polite">
+            {String(card + 1).padStart(2, "0")} / 06 — {titles[card]}
+          </span>
+        </div>
+        <div className="deck-stack">
+          <article
+            key={card}
+            className={"deck-card " + direction}
+            aria-label={titles[card]}
+          >
+            <div className="deck-eyebrow">
+              CHAPTER {String(card + 1).padStart(2, "0")} <span>↗</span>
+            </div>
+            {card === 0 && (
+              <div className="deck-intro">
+                <div>
+                  <h1>
+                    Mayon
+                    <br />
+                    <em>Thakur.</em>
+                  </h1>
+                  <p className="deck-subtitle">
+                    Developer. SaaS builder.
+                    <br />
+                    Founder of StudyElo.online.
+                  </p>
+                  <p>
+                    First-year B.Tech student. Five hackathon wins. Looking for
+                    real problems worth solving, and people to build with.
+                  </p>
+                  <button className="deck-link" onClick={() => go(1)}>
+                    Get to know my work <ArrowRight size={19} />
+                  </button>
+                </div>
+                <figure>
+                  <img
+                    className="deck-portrait"
+                    src="/mayon-thakur.webp"
+                    alt="Mayon Thakur"
+                  />
+                  <figcaption>THE PERSON BEHIND THE PROJECTS</figcaption>
+                </figure>
+              </div>
+            )}
+            {card === 1 && (
+              <>
+                <h2>
+                  The tools
+                  <br />
+                  <em>behind the ideas.</em>
+                </h2>
+                <p>
+                  I work across interfaces, application logic, and data to turn
+                  an idea into a usable web product.
+                </p>
+                <div className="deck-skills">
+                  {[
+                    [
+                      "01 / LANGUAGES",
+                      "JavaScript",
+                      "TypeScript",
+                      "HTML",
+                      "CSS",
+                    ],
+                    [
+                      "02 / APPLICATIONS",
+                      "React",
+                      "Node.js",
+                      "Cloudflare Workers",
+                    ],
+                    [
+                      "03 / DATA & WORKFLOW",
+                      "SQLite",
+                      "Cloudflare D1 & KV",
+                      "Git",
+                      "PDF.js",
+                    ],
+                  ].map(([label, ...items]) => (
+                    <section key={label}>
+                      <h3>{label}</h3>
+                      {items.map((item) => (
+                        <span className="deck-tag" key={item}>
+                          {item}
+                        </span>
+                      ))}
+                    </section>
+                  ))}
+                </div>
+                <p className="deck-note">
+                  Learning through building, testing, and shipping.
+                </p>
+              </>
+            )}
+            {card === 2 && (
+              <>
+                <div className="deck-project-heading">
+                  <div>
+                    <h2>
+                      StudyElo<em>.online</em>
+                    </h2>
+                    <p className="deck-subtitle">
+                      A calmer way to get started.
+                    </p>
+                  </div>
+                  <a className="deck-outline" href="https://studyelo.online/">
+                    Explore the product <ArrowUpRight size={16} />
+                  </a>
+                </div>
+                <img
+                  className="deck-product"
+                  src="/studyelo-focus.webp"
+                  alt="StudyElo Pomodoro focus room"
+                />
+                <div className="deck-story">
+                  <section>
+                    <h3>THE PROBLEM</h3>
+                    <p>
+                      Getting organised can become a distraction from actually
+                      studying.
+                    </p>
+                  </section>
+                  <section>
+                    <h3>WHAT I BUILT</h3>
+                    <p>
+                      A focus room, Pomodoro sessions, and study-time tracking
+                      in one place.
+                    </p>
+                  </section>
+                  <section>
+                    <h3>MY ROLE</h3>
+                    <p>
+                      Founder and developer, from the first idea to deployment
+                      and ongoing improvements.
+                    </p>
+                  </section>
+                </div>
+              </>
+            )}
+            {card === 3 && (
+              <>
+                <div className="deck-social-title">
+                  <Linkedin />
+                  <span>LINKEDIN / PROFILE</span>
+                </div>
+                <div className="deck-profile-banner" />
+                <div className="deck-profile">
+                  <img src="/mayon-thakur.webp" alt="Mayon Thakur" />
+                  <div>
+                    <h2>Mayon Thakur</h2>
+                    <p className="deck-subtitle">
+                      SaaS developer · Founder of StudyElo.online
+                    </p>
+                  </div>
+                </div>
+                <p>
+                  First-year B.Tech Computer Science student at Dr. A.P.J. Abdul
+                  Kalam Technical University. Building practical tools for
+                  students and exploring projects that solve real-world
+                  problems.
+                </p>
+                <div className="deck-profile-details">
+                  <span>StudyElo · Founder</span>
+                  <span>Greater Delhi Area</span>
+                  <span>5 hackathon wins</span>
+                </div>
+                <a
+                  className="deck-link"
+                  href="https://www.linkedin.com/in/mayon-thakur/"
+                >
+                  View my LinkedIn profile <ArrowUpRight />
+                </a>
+                <p className="deck-note">
+                  Profile summary · Visit LinkedIn for the full profile and
+                  latest updates.
+                </p>
+              </>
+            )}
+            {card === 4 && (
+              <>
+                <div className="deck-social-title">
+                  <Github />
+                  <span>GITHUB / OPEN SOURCE</span>
+                </div>
+                <h2>@mayodevs01</h2>
+                <p>Projects, experiments, and the work behind the interface.</p>
+                <div className="deck-repos">
+                  {repos.map((repo) => (
+                    <a key={repo.name} href={repo.html_url}>
+                      <strong>{repo.name} ↗</strong>
+                      <p>
+                        {repo.description ||
+                          "Explore the repository and its source code."}
+                      </p>
+                      <span>{repo.language || "Repository"}</span>
+                    </a>
+                  ))}
+                </div>
+                <div className="deck-contribution-title">
+                  <h3>CONTRIBUTION ACTIVITY</h3>
+                  <a href="https://github.com/mayodevs01">
+                    View live profile ↗
+                  </a>
+                </div>
+                <div
+                  className="deck-activity"
+                  aria-label="GitHub contribution activity over the past year"
+                >
+                  {contributions.map((day) => (
+                    <span
+                      key={day.date}
+                      data-level={day.level}
+                      title={
+                        day.date + " · Activity level " + day.level + " of 4"
+                      }
+                    />
+                  ))}
+                </div>
+                <p className="deck-note">
+                  Public GitHub snapshot · 9 November 2026 · Activity intensity
+                  from low to high.
+                </p>
+              </>
+            )}
+            {card === 5 && (
+              <>
+                <div className="deck-social-title">
+                  <Mail />
+                  <span>A NOTE TO MAYON</span>
+                </div>
+                <h2>
+                  What should
+                  <br />
+                  <em>we build next?</em>
+                </h2>
+                <p>
+                  Tell me about the problem, who it affects, and what you have
+                  in mind.
+                </p>
+                <form className="deck-mail" onSubmit={compose}>
+                  <label>
+                    Your name
+                    <input
+                      required
+                      maxLength={100}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      autoComplete="name"
+                      placeholder="How should I call you?"
+                    />
+                  </label>
+                  <label>
+                    Your idea
+                    <textarea
+                      required
+                      maxLength={4000}
+                      rows={4}
+                      value={idea}
+                      onChange={(e) => setIdea(e.target.value)}
+                      placeholder="I’m working on a problem…"
+                    />
+                  </label>
+                  <button className="deck-outline" type="submit">
+                    Open email draft <ArrowUpRight size={17} />
+                  </button>
+                  <p className="deck-note">
+                    Opens your email app with the message ready to send to{" "}
+                    <a href="mailto:mayodevs01@gmail.com">
+                      mayodevs01@gmail.com
+                    </a>
+                    .
+                  </p>
+                </form>
+              </>
+            )}
+          </article>
+        </div>
+        <nav className="deck-controls" aria-label="Card navigation">
+          <button onClick={() => go(card - 1)} disabled={card === 0}>
+            <ArrowLeft size={18} /> Previous
+          </button>
+          <div className="deck-dots">
+            {titles.map((title, i) => (
+              <button
+                key={title}
+                onClick={() => go(i)}
+                aria-label={"Show " + title}
+                aria-current={card === i ? "step" : undefined}
+              />
+            ))}
+          </div>
+          <button onClick={() => go(card === 5 ? 0 : card + 1)}>
+            {card === 5 ? "Back to start" : "Next chapter"}{" "}
+            <ArrowRight size={18} />
+          </button>
+        </nav>
+      </main>
+      <footer className="deck-footer">
+        Mayon Thakur · Developer & founder <span>Made with curiosity.</span>
       </footer>
     </div>
-  );
-}
-
-function ResumeLink() {
-  return (
-    <a className="archive-resume" href={resume} download>
-      Download résumé <Download size={15} aria-hidden="true" />
-    </a>
-  );
-}
-
-function ChapterSection({
-  chapter,
-  current,
-  className,
-  children,
-}: {
-  chapter: Chapter;
-  current: ChapterId;
-  className: string;
-  children: ReactNode;
-}) {
-  return (
-    <section
-      id={chapter.id}
-      className={`archive-chapter ${className}`}
-      tabIndex={-1}
-      data-current={current === chapter.id}
-      aria-labelledby={`chapter-${chapter.id}`}
-    >
-      <div className="archive-chapter-label">
-        <span className="archive-chapter-number">{chapter.number}</span>
-        <span id={`chapter-${chapter.id}`} className="archive-label">
-          / {chapter.title}
-        </span>
-      </div>
-      <div className="archive-reveal">{children}</div>
-    </section>
   );
 }

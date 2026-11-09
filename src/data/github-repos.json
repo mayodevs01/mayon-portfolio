@@ -1,0 +1,38 @@
+[
+  {
+    "name": "mayon-portfolio",
+    "description": null,
+    "html_url": "https://github.com/mayodevs01/mayon-portfolio",
+    "language": "TypeScript"
+  },
+  {
+    "name": "tenant-meter",
+    "description": "A dependency-free SQLite usage ledger with idempotency and monthly quotas for SaaS apps.",
+    "html_url": "https://github.com/mayodevs01/tenant-meter",
+    "language": "JavaScript"
+  },
+  {
+    "name": "realestate-co",
+    "description": "RealEstate.co — Delhi NCR property advisory. React, TypeScript, interactive MapLibre search, and Cloudflare Pages.",
+    "html_url": "https://github.com/mayodevs01/realestate-co",
+    "language": "TypeScript"
+  },
+  {
+    "name": "corrupted-minds",
+    "description": null,
+    "html_url": "https://github.com/mayodevs01/corrupted-minds",
+    "language": "JavaScript"
+  },
+  {
+    "name": "Practice",
+    "description": null,
+    "html_url": "https://github.com/mayodevs01/Practice",
+    "language": null
+  },
+  {
+    "name": "P.O.L.A.R.I.S",
+    "description": "P.O.L.A.R.I.S",
+    "html_url": "https://github.com/mayodevs01/P.O.L.A.R.I.S",
+    "language": "Python"
+  }
+]
