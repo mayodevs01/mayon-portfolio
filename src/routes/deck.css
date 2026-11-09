@@ -1,10 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap");
 .deck-site {
+  --black: #18191b;
   min-height: 100svh;
-  background: #10161d;
-  color: #f2eadb;
-  font-family: Inter, sans-serif;
-  padding: 0 clamp(18px, 5vw, 70px);
+  background-color: #efeee8;
+  background-image: radial-gradient(#b9b9b0 0.8px, transparent 0.8px);
+  background-size: 19px 19px;
+  color: var(--black);
+  font-family: Inter, system-ui, sans-serif;
+  padding: 0 clamp(16px, 5vw, 70px);
   line-height: 1.6;
 }
 .deck-header {
@@ -14,51 +17,71 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px 0;
-  border-bottom: 1px solid #494333;
+  border-bottom: 2px solid var(--black);
 }
 .deck-brand {
   font:
-    28px Newsreader,
-    Georgia,
-    serif;
-  letter-spacing: 3px;
+    700 28px "Space Grotesk",
+    sans-serif;
+  letter-spacing: -2px;
 }
 .deck-brand span {
   font:
-    11px Inter,
+    700 12px "Space Grotesk",
     sans-serif;
-  border-left: 1px solid #c9ac75;
-  padding-left: 18px;
-  margin-left: 14px;
+  border-left: 2px solid;
+  padding-left: 16px;
+  margin-left: 12px;
+  letter-spacing: 1px;
 }
 .deck-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  border: 1px solid #b9a16d;
-  padding: 9px 15px;
+  border: 2px solid var(--black);
+  padding: 10px 16px;
   font-size: 12px;
-  background: transparent;
-  color: inherit;
+  font-weight: 700;
+  background: #d5ff5f;
+  color: var(--black);
+  box-shadow: 3px 3px 0 var(--black);
   cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 .deck-outline:hover {
-  background: #d7bb80;
-  color: #10161d;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--black);
+}
+.deck-outline:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--black);
 }
 .deck-main {
   max-width: 1040px;
-  margin: 35px auto 25px;
+  margin: 30px auto 24px;
+  scroll-margin-top: 20px;
 }
 .deck-topline {
   display: flex;
   justify-content: space-between;
   gap: 15px;
-  font-size: 10px;
-  letter-spacing: 1.6px;
-  color: #c6b489;
-  margin-bottom: 22px;
+  font:
+    700 11px "Space Grotesk",
+    sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+.deck-topline > span:first-child {
+  background: var(--black);
+  color: white;
+  padding: 6px 10px;
+  transform: rotate(-2deg);
+}
+.deck-topline > span:last-child {
+  padding-block: 6px;
 }
 .deck-stack {
   position: relative;
@@ -69,35 +92,51 @@
 .deck-stack:after {
   content: "";
   position: absolute;
-  inset: 16px -8px -12px;
-  border: 1px solid #61563e;
-  background: #17202a;
-  border-radius: 14px;
+  inset: 14px -6px -13px;
+  border: 2px solid var(--black);
+  background: #bda8ff;
+  border-radius: 18px;
   z-index: -1;
-  transform: rotate(1.1deg);
+  transform: rotate(1.3deg);
 }
 .deck-stack:after {
-  inset: 27px 7px -21px;
-  transform: rotate(-1.1deg);
+  inset: 24px 8px -21px;
+  transform: rotate(-1.2deg);
   z-index: -2;
-  background: #1e2730;
+  background: #d5ff5f;
 }
 .deck-card {
-  background: linear-gradient(130deg, #202a35, #161e27);
-  border: 1px solid #776647;
-  border-radius: 12px;
-  padding: clamp(24px, 4vw, 48px);
+  --card-color: #faf9f3;
+  background: var(--card-color);
+  border: 2px solid var(--black);
+  border-radius: 16px;
+  padding: clamp(24px, 4vw, 46px);
   min-height: 570px;
-  box-shadow: 0 25px 70px #0004;
-  animation: deal-forward 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  box-shadow: 7px 7px 0 var(--black);
+  animation: deal-forward 0.48s cubic-bezier(0.18, 0.8, 0.22, 1) both;
+}
+.deck-card[data-card="1"] {
+  --card-color: #d5ff5f;
+}
+.deck-card[data-card="2"] {
+  --card-color: #c3b1ff;
+}
+.deck-card[data-card="3"] {
+  --card-color: #c0e7fa;
+}
+.deck-card[data-card="4"] {
+  --card-color: #f7f7ef;
+}
+.deck-card[data-card="5"] {
+  --card-color: #ffcaad;
 }
 .deck-card.back {
   animation-name: deal-back;
 }
 @keyframes deal-forward {
   from {
-    opacity: 0.25;
-    transform: translateY(28px) translateX(24px) rotate(1.5deg) scale(0.97);
+    opacity: 0.2;
+    transform: translateY(30px) translateX(25px) rotate(2deg) scale(0.96);
   }
   to {
     opacity: 1;
@@ -106,8 +145,8 @@
 }
 @keyframes deal-back {
   from {
-    opacity: 0.25;
-    transform: translateY(20px) translateX(-24px) rotate(-1.5deg) scale(0.97);
+    opacity: 0.2;
+    transform: translateY(20px) translateX(-25px) rotate(-2deg) scale(0.96);
   }
   to {
     opacity: 1;
@@ -117,41 +156,57 @@
 .deck-eyebrow {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: #d7bb80;
+  align-items: center;
+  font:
+    700 11px "Space Grotesk",
+    sans-serif;
+  letter-spacing: 1.5px;
   margin-bottom: 24px;
 }
-.deck-eyebrow span {
-  font-size: 20px;
+.deck-eyebrow > span {
+  display: grid;
+  place-items: center;
+  background: #18191b;
+  color: #d5ff5f;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
 }
 .deck-card h1,
 .deck-card h2 {
   font:
-    500 clamp(42px, 6vw, 76px)/0.98 Newsreader,
-    Georgia,
-    serif;
-  letter-spacing: -2px;
+    700 clamp(38px, 5.5vw, 70px)/1 "Space Grotesk",
+    sans-serif;
+  letter-spacing: -3px;
   margin: 0 0 22px;
+  overflow-wrap: anywhere;
 }
 .deck-card h1 {
-  font-size: clamp(65px, 9vw, 108px);
+  font-size: clamp(64px, 8vw, 100px);
+  letter-spacing: -6px;
 }
 .deck-card em {
-  font-weight: 400;
-  color: #d7bb80;
+  font-style: normal;
+  text-decoration: underline;
+  text-decoration-color: #a78bfa;
+  text-decoration-thickness: 9px;
+  text-underline-offset: 5px;
+}
+.deck-card[data-card="2"] em {
+  text-decoration-color: #d5ff5f;
 }
 .deck-card p {
-  color: #c6c9cb;
+  color: #41434a;
   font-size: 14px;
   max-width: 660px;
 }
 .deck-card .deck-subtitle {
   font:
-    24px/1.35 Newsreader,
-    Georgia,
-    serif;
-  color: #eee7db;
+    600 23px/1.35 "Space Grotesk",
+    sans-serif;
+  color: #18191b;
   margin-bottom: 16px;
 }
 .deck-intro {
@@ -160,60 +215,89 @@
   gap: 45px;
   align-items: center;
 }
+.deck-intro figure {
+  position: relative;
+  transform: rotate(3deg);
+  background: #d5ff5f;
+  padding: 10px 10px 0;
+  border: 2px solid;
+  box-shadow: 5px 5px 0 #18191b;
+}
 .deck-portrait {
   width: 100%;
-  height: 340px;
+  height: 320px;
   object-fit: cover;
   object-position: center 42%;
-  border: 1px solid #a58e61;
-  padding: 5px;
+  border: 2px solid;
 }
 .deck-intro figcaption {
-  font-size: 9px;
-  letter-spacing: 1.4px;
-  color: #aab0b4;
-  margin-top: 12px;
+  font:
+    700 11px "Space Grotesk",
+    sans-serif;
+  letter-spacing: 1px;
+  padding: 14px 5px;
+}
+.deck-sticker {
+  position: absolute;
+  right: -13px;
+  top: -19px;
+  z-index: 1;
+  background: #bda8ff;
+  border: 2px solid;
+  padding: 9px 12px;
+  font:
+    700 11px "Space Grotesk",
+    sans-serif;
+  transform: rotate(-9deg);
+  box-shadow: 3px 3px 0 #18191b;
 }
 .deck-link {
   display: inline-flex;
   gap: 12px;
   align-items: center;
   font:
-    22px Newsreader,
-    Georgia,
-    serif;
-  border-bottom: 1px solid #c9ac75;
+    700 18px "Space Grotesk",
+    sans-serif;
+  border-bottom: 2px solid;
   padding: 8px 0;
   margin-top: 22px;
   cursor: pointer;
+}
+.deck-link:hover {
+  background: #d5ff5f;
 }
 .deck-skills,
 .deck-story {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
+  gap: 24px;
   margin-top: 30px;
 }
 .deck-card h3 {
-  font-size: 10px;
-  letter-spacing: 1.3px;
-  color: #ddc692;
+  font:
+    700 11px "Space Grotesk",
+    sans-serif;
+  letter-spacing: 1px;
   margin-bottom: 12px;
 }
 .deck-tag {
   display: inline-block;
-  border: 1px solid #53606a;
-  padding: 7px 12px;
-  margin: 0 6px 8px 0;
+  background: #faf9f3;
+  border: 2px solid #18191b;
+  border-radius: 6px;
+  padding: 7px 11px;
+  margin: 0 6px 9px 0;
   font-size: 13px;
+  font-weight: 600;
+  box-shadow: 2px 2px 0 #18191b;
 }
 .deck-skills section {
-  border-top: 1px solid #665b45;
-  padding-top: 20px;
+  border-top: 2px solid;
+  padding-top: 18px;
 }
 .deck-card .deck-note {
   font-size: 11px;
-  color: #a8afb5;
+  color: #55575c;
   margin-top: 20px;
 }
 .deck-project-heading {
@@ -223,15 +307,17 @@
   gap: 16px;
 }
 .deck-project-heading h2 {
-  font-size: 50px;
+  font-size: 46px;
 }
 .deck-project-heading h2 em {
-  font-size: 30px;
+  font-size: 28px;
 }
 .deck-product {
   width: 100%;
-  border: 1px solid #61563e;
+  border: 2px solid;
+  border-radius: 8px;
   margin-top: 20px;
+  box-shadow: 4px 4px 0 #18191b;
 }
 .deck-story p {
   font-size: 12px;
@@ -240,21 +326,30 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 11px;
-  letter-spacing: 1.6px;
-  color: #d7bb80;
+  font:
+    700 12px "Space Grotesk",
+    sans-serif;
+  letter-spacing: 1px;
   margin-bottom: 24px;
 }
 .deck-profile-banner {
   height: 80px;
-  background: linear-gradient(110deg, #234254, #333c50);
-  border: 1px solid #4f6874;
+  background: repeating-linear-gradient(
+    135deg,
+    #8ec9ed 0px,
+    #8ec9ed 20px,
+    #addbf4 20px,
+    #addbf4 40px
+  );
+  border: 2px solid;
+  border-radius: 8px;
 }
 .deck-profile {
   display: flex;
   align-items: center;
   gap: 22px;
   margin: -25px 20px 20px;
+  position: relative;
 }
 .deck-profile img {
   width: 100px;
@@ -262,14 +357,15 @@
   object-fit: cover;
   object-position: center 38%;
   border-radius: 50%;
-  border: 5px solid #1b2530;
+  border: 4px solid #18191b;
 }
 .deck-profile h2 {
-  font-size: 38px;
-  margin: 30px 0 6px;
+  font-size: 36px;
+  margin: 32px 0 6px;
+  letter-spacing: -1px;
 }
 .deck-profile .deck-subtitle {
-  font-size: 19px;
+  font-size: 18px;
 }
 .deck-profile-details {
   display: flex;
@@ -278,9 +374,11 @@
   margin-top: 22px;
 }
 .deck-profile-details span {
-  border: 1px solid #58626b;
+  background: #f8fbff;
+  border: 2px solid;
   padding: 7px 10px;
   font-size: 12px;
+  border-radius: 30px;
 }
 .deck-repos {
   display: grid;
@@ -289,13 +387,17 @@
   margin: 22px 0;
 }
 .deck-repos a {
-  border: 1px solid #4c5963;
+  background: #fff;
+  border: 2px solid #18191b;
+  border-radius: 8px;
   padding: 14px;
   min-width: 0;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 .deck-repos strong {
   font-size: 13px;
-  color: #ddc692;
   overflow-wrap: anywhere;
 }
 .deck-repos p {
@@ -304,10 +406,14 @@
 }
 .deck-repos span {
   font-size: 10px;
-  color: #adb9c1;
+  background: #e9ddff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: #373044;
 }
 .deck-repos a:hover {
-  border-color: #d7bb80;
+  transform: translateY(-3px);
+  box-shadow: 3px 3px 0 #18191b;
 }
 .deck-contribution-title {
   display: flex;
@@ -325,20 +431,20 @@
   padding-bottom: 7px;
 }
 .deck-activity span {
-  background: #34404a;
+  background: #e3e5db;
   border-radius: 2px;
 }
 .deck-activity [data-level="1"] {
-  background: #506944;
+  background: #c2dd8e;
 }
 .deck-activity [data-level="2"] {
-  background: #78964c;
+  background: #96bb58;
 }
 .deck-activity [data-level="3"] {
-  background: #aac05b;
+  background: #668f35;
 }
 .deck-activity [data-level="4"] {
-  background: #d7e688;
+  background: #30561e;
 }
 .deck-mail {
   margin-top: 25px;
@@ -347,7 +453,7 @@
 .deck-mail label {
   display: block;
   font-size: 12px;
-  color: #d7bb80;
+  font-weight: 600;
   margin-bottom: 16px;
 }
 .deck-mail input,
@@ -355,9 +461,10 @@
   display: block;
   width: 100%;
   margin-top: 6px;
-  background: #101820;
-  border: 1px solid #59616a;
-  color: #fff;
+  background: #fffaf5;
+  border: 2px solid #18191b;
+  border-radius: 6px;
+  color: #18191b;
   padding: 12px;
   font:
     14px Inter,
@@ -378,14 +485,24 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  color: #e7d6b4;
-  font-size: 12px;
+  font:
+    700 12px "Space Grotesk",
+    sans-serif;
   cursor: pointer;
   min-height: 44px;
+  border: 2px solid;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 3px 3px 0 #18191b;
+}
+.deck-controls > button:last-child {
+  background: #d5ff5f;
 }
 .deck-controls > button:disabled {
-  opacity: 0.3;
+  opacity: 0.4;
   cursor: default;
+  box-shadow: none;
 }
 .deck-dots {
   display: flex;
@@ -399,39 +516,47 @@
 .deck-dots button:after {
   content: "";
   position: absolute;
-  inset: 17px 9px;
-  background: #5d6670;
+  inset: 16px 9px;
+  background: #b7b9b2;
+  border: 1px solid #18191b;
   border-radius: 50%;
 }
 .deck-dots button[aria-current]:after {
-  background: #e0c58c;
+  background: #18191b;
+  transform: scale(1.4);
 }
 .deck-footer {
   max-width: 1160px;
   margin: auto;
   display: flex;
   justify-content: space-between;
+  gap: 15px;
   padding: 20px 0;
-  color: #a3a9ad;
-  font-size: 10px;
+  color: #53564e;
+  font:
+    500 10px "Space Grotesk",
+    sans-serif;
 }
 .deck-site :focus-visible {
-  outline: 2px solid #d7bb80;
+  outline: 3px solid #643fd1;
   outline-offset: 5px;
 }
 @media (max-width: 700px) {
   .deck-intro {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 35px;
+  }
+  .deck-intro figure {
+    width: 240px;
+    max-width: 100%;
+    margin: 0 auto;
   }
   .deck-portrait {
-    height: 260px;
-    width: 220px;
-    max-width: 100%;
+    height: 250px;
   }
   .deck-topline {
     font-size: 9px;
-    letter-spacing: 0.6px;
+    letter-spacing: 0;
   }
   .deck-skills,
   .deck-story {
@@ -444,8 +569,14 @@
   .deck-card {
     min-height: 600px;
   }
+  .deck-card h2 {
+    letter-spacing: -2px;
+  }
   .deck-project-heading {
     display: block;
+  }
+  .deck-project-heading h2 {
+    font-size: 36px;
   }
   .deck-profile {
     margin-left: 0;
@@ -457,6 +588,7 @@
   }
   .deck-profile h2 {
     font-size: 28px;
+    letter-spacing: -1px;
   }
   .deck-profile .deck-subtitle {
     font-size: 16px;
@@ -472,15 +604,21 @@
   }
   .deck-controls {
     padding-inline: 0;
+    gap: 6px;
   }
   .deck-controls > button {
     font-size: 10px;
     gap: 4px;
+    padding: 6px;
   }
   .deck-dots button {
-    width: 20px;
+    width: 18px;
   }
   .deck-dots button:after {
-    inset-inline: 7px;
+    inset-inline: 5px;
+  }
+  .deck-sticker {
+    font-size: 9px;
+    right: -6px;
   }
 }

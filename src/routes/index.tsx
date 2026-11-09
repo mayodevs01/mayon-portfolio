@@ -53,7 +53,7 @@ function Portfolio() {
       </header>
       <main className="deck-main">
         <div className="deck-topline">
-          <span>A FEW THINGS ABOUT ME</span>
+          <span>ME, IN SIX CARDS</span>
           <span aria-live="polite">
             {String(card + 1).padStart(2, "0")} / 06 — {titles[card]}
           </span>
@@ -62,10 +62,11 @@ function Portfolio() {
           <article
             key={card}
             className={"deck-card " + direction}
+            data-card={card}
             aria-label={titles[card]}
           >
             <div className="deck-eyebrow">
-              CHAPTER {String(card + 1).padStart(2, "0")} <span>↗</span>
+              CARD {String(card + 1).padStart(2, "0")} <span>↗</span>
             </div>
             {card === 0 && (
               <div className="deck-intro">
@@ -85,16 +86,17 @@ function Portfolio() {
                     real problems worth solving, and people to build with.
                   </p>
                   <button className="deck-link" onClick={() => go(1)}>
-                    Get to know my work <ArrowRight size={19} />
+                    Meet my toolkit <ArrowRight size={19} />
                   </button>
                 </div>
                 <figure>
+                  <span className="deck-sticker">5 HACKATHON WINS ✳</span>
                   <img
                     className="deck-portrait"
                     src="/mayon-thakur.webp"
                     alt="Mayon Thakur"
                   />
-                  <figcaption>THE PERSON BEHIND THE PROJECTS</figcaption>
+                  <figcaption>YES, I BUILT THIS.</figcaption>
                 </figure>
               </div>
             )}
@@ -345,13 +347,14 @@ function Portfolio() {
             ))}
           </div>
           <button onClick={() => go(card === 5 ? 0 : card + 1)}>
-            {card === 5 ? "Back to start" : "Next chapter"}{" "}
+            {card === 5 ? "Back to start" : "Next card"}{" "}
             <ArrowRight size={18} />
           </button>
         </nav>
       </main>
       <footer className="deck-footer">
-        Mayon Thakur · Developer & founder <span>Made with curiosity.</span>
+        Mayon Thakur · Developer & founder{" "}
+        <span>ALWAYS BUILDING SOMETHING.</span>
       </footer>
     </div>
   );
