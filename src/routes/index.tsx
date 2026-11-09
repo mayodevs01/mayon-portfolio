@@ -29,6 +29,9 @@ function Portfolio() {
   function go(next: number) {
     setDirection(next > card ? "forward" : "back");
     setCard(next);
+    document
+      .querySelector(".deck-main")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
   function compose(event: FormEvent) {
     event.preventDefault();
