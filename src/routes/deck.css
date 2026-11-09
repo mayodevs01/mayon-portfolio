@@ -622,3 +622,78 @@
     right: -6px;
   }
 }
+
+/* Each face rotates through its edge before the next card is revealed. */
+.deck-stack {
+  perspective: 1600px;
+}
+.deck-card {
+  touch-action: pan-y;
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+.deck-card.flip-out {
+  animation: card-turn-out 0.28s ease-in both;
+  pointer-events: none;
+}
+.deck-card.flip-in {
+  animation: card-turn-in 0.38s cubic-bezier(0.16, 0.8, 0.24, 1) both;
+}
+.deck-card.back.flip-out {
+  animation-name: card-turn-out-back;
+}
+.deck-card.back.flip-in {
+  animation-name: card-turn-in-back;
+}
+@keyframes card-turn-out {
+  from {
+    transform: rotateY(0) translateZ(0);
+  }
+  to {
+    transform: translateZ(80px) rotateY(-90deg);
+  }
+}
+@keyframes card-turn-in {
+  from {
+    transform: translateZ(80px) rotateY(90deg);
+  }
+  to {
+    transform: rotateY(0) translateZ(0);
+  }
+}
+@keyframes card-turn-out-back {
+  from {
+    transform: rotateY(0) translateZ(0);
+  }
+  to {
+    transform: translateZ(80px) rotateY(90deg);
+  }
+}
+@keyframes card-turn-in-back {
+  from {
+    transform: translateZ(80px) rotateY(-90deg);
+  }
+  to {
+    transform: rotateY(0) translateZ(0);
+  }
+}
+.deck-card.flip-idle {
+  animation: none;
+}
+.deck-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.deck-tag img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex: none;
+}
+.deck-activity {
+  touch-action: auto;
+}
+.deck-dots button:disabled {
+  cursor: default;
+}

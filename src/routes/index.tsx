@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useState, useRef, type FormEvent, type TouchEvent } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -21,14 +21,76 @@ const titles = [
   "GitHub",
   "Your idea",
 ];
+const toolLogos: Record<string, string> = {
+  JavaScript: "javascript",
+  TypeScript: "typescript",
+  HTML: "html5",
+  CSS: "css3",
+  React: "react",
+  "Node.js": "nodejs",
+  "Cloudflare Workers": "cloudflare",
+  SQLite: "sqlite",
+  "Cloudflare D1 & KV": "cloudflare",
+  Git: "git",
+  "PDF.js": "pdfjs",
+};
 function Portfolio() {
   const [card, setCard] = useState(0);
   const [direction, setDirection] = useState("forward");
   const [name, setName] = useState("");
   const [idea, setIdea] = useState("");
+  const [phase, setPhase] = useState<"idle" | "out" | "in">("idle");
+  const pendingCard = useRef<number | null>(null);
+  const swipe = useRef<{ x: number; y: number; time: number } | null>(null);
+  function startSwipe(event: TouchEvent<HTMLElement>) {
+    swipe.current = null;
+    if (
+      event.touches.length !== 1 ||
+      (event.target as HTMLElement).closest(
+        "a, button, input, textarea, select, .deck-activity",
+      )
+    )
+      return;
+    const touch = event.touches[0];
+    swipe.current = { x: touch.clientX, y: touch.clientY, time: Date.now() };
+  }
+  function moveSwipe(event: TouchEvent<HTMLElement>) {
+    if (!swipe.current) return;
+    if (event.touches.length !== 1) {
+      swipe.current = null;
+      return;
+    }
+    const dx = Math.abs(event.touches[0].clientX - swipe.current.x);
+    const dy = Math.abs(event.touches[0].clientY - swipe.current.y);
+    if (dy > 14 && dy > dx) swipe.current = null;
+  }
+  function endSwipe(event: TouchEvent<HTMLElement>) {
+    const start = swipe.current;
+    swipe.current = null;
+    if (!start || event.changedTouches.length !== 1) return;
+    const dx = event.changedTouches[0].clientX - start.x;
+    const dy = event.changedTouches[0].clientY - start.y;
+    if (
+      Math.abs(dx) < 60 ||
+      Math.abs(dx) < Math.abs(dy) * 1.4 ||
+      Date.now() - start.time > 900
+    )
+      return;
+    event.preventDefault();
+    go(card + (dx < 0 ? 1 : -1));
+  }
   function go(next: number) {
+    if (
+      next === card ||
+      next < 0 ||
+      next >= titles.length ||
+      pendingCard.current !== null
+    )
+      return;
+    pendingCard.current = next;
+    setPhase("out");
     setDirection(next > card ? "forward" : "back");
-    setCard(next);
+
     document
       .querySelector(".deck-main")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -47,9 +109,6 @@ function Portfolio() {
         <a href="/" className="deck-brand">
           MT <span>MAYON.LOL</span>
         </a>
-        <a href="/Mayon-Thakur-Resume.pdf" download className="deck-outline">
-          Download résumé ↗
-        </a>
       </header>
       <main className="deck-main">
         <div className="deck-topline">
@@ -61,8 +120,25 @@ function Portfolio() {
         <div className="deck-stack">
           <article
             key={card}
-            className={"deck-card " + direction}
+            className={"deck-card " + direction + " flip-" + phase}
             data-card={card}
+            aria-busy={phase !== "idle"}
+            onTouchStart={startSwipe}
+            onTouchMove={moveSwipe}
+            onTouchEnd={endSwipe}
+            onTouchCancel={() => {
+              swipe.current = null;
+            }}
+            onAnimationEnd={(event) => {
+              if (event.target !== event.currentTarget) return;
+              if (phase === "out" && pendingCard.current !== null) {
+                setCard(pendingCard.current);
+                setPhase("in");
+              } else if (phase === "in") {
+                pendingCard.current = null;
+                setPhase("idle");
+              }
+            }}
             aria-label={titles[card]}
           >
             <div className="deck-eyebrow">
@@ -138,6 +214,12 @@ function Portfolio() {
                       <h3>{label}</h3>
                       {items.map((item) => (
                         <span className="deck-tag" key={item}>
+                          <img
+                            src={"/tech/" + toolLogos[item] + ".svg"}
+                            alt=""
+                            width="24"
+                            height="24"
+                          />
                           {item}
                         </span>
                       ))}
@@ -333,7 +415,10 @@ function Portfolio() {
           </article>
         </div>
         <nav className="deck-controls" aria-label="Card navigation">
-          <button onClick={() => go(card - 1)} disabled={card === 0}>
+          <button
+            onClick={() => go(card - 1)}
+            disabled={card === 0 || phase !== "idle"}
+          >
             <ArrowLeft size={18} /> Previous
           </button>
           <div className="deck-dots">
@@ -341,12 +426,16 @@ function Portfolio() {
               <button
                 key={title}
                 onClick={() => go(i)}
+                disabled={phase !== "idle"}
                 aria-label={"Show " + title}
                 aria-current={card === i ? "step" : undefined}
               />
             ))}
           </div>
-          <button onClick={() => go(card === 5 ? 0 : card + 1)}>
+          <button
+            disabled={phase !== "idle"}
+            onClick={() => go(card === 5 ? 0 : card + 1)}
+          >
             {card === 5 ? "Back to start" : "Next card"}{" "}
             <ArrowRight size={18} />
           </button>
