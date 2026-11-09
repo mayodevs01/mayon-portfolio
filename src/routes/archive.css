@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&family=Inter:wght@400;500;600&display=swap");
 
+html:has(.archive) {
+  --archive-scroll-offset: 5.5rem;
+  scroll-padding-top: var(--archive-scroll-offset);
+  scroll-snap-type: y proximity;
+}
+
 .archive {
   --ink: #121820;
   --ink-deep: #0d1219;
@@ -142,9 +148,7 @@
 
 .archive-timeline {
   position: relative;
-  margin-block-start: clamp(2rem, 6vw, 4.75rem);
   padding-inline-start: var(--rail);
-  scroll-margin-top: 7rem;
 }
 
 .archive-timeline::before {
@@ -157,11 +161,15 @@
 
 .archive-chapter {
   position: relative;
-  padding-bottom: clamp(4rem, 8vw, 7.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-block-size: calc(100svh - var(--archive-scroll-offset));
+  padding-block: clamp(2.5rem, 6vh, 5rem);
+  scroll-snap-align: start;
 }
-.archive-chapter,
-.archive-case {
-  scroll-margin-top: 6rem;
+.archive-chapter + .archive-chapter {
+  border-top: 1px solid var(--rule);
 }
 .archive-chapter-label {
   display: flex;
@@ -205,18 +213,15 @@
   border-color: var(--brass);
 }
 
-.archive-chapter[data-current="true"] .archive-reveal {
-  animation: archive-enter 0.62s cubic-bezier(0.19, 1, 0.22, 1) both;
+.archive-reveal {
+  --reveal: var(--slide-progress, 1);
+  opacity: calc(0.18 + 0.82 * var(--reveal));
+  transform: translateY(calc(4rem * (1 - var(--reveal))))
+    scale(calc(0.96 + 0.04 * var(--reveal)));
+  transform-origin: center top;
 }
-@keyframes archive-enter {
-  from {
-    opacity: 0.45;
-    transform: translateY(1.15rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.archive-reveal:focus-within {
+  --reveal: 1;
 }
 @keyframes archive-rule {
   from {
@@ -429,12 +434,16 @@
   gap: 1rem;
   border-top: 1px solid var(--rule);
   padding-block: 1.3rem 1.8rem;
+  scroll-snap-align: end;
 }
 .archive-footer > span {
   color: var(--muted);
 }
 
 @media (max-width: 700px) {
+  html:has(.archive) {
+    --archive-scroll-offset: 6.3rem;
+  }
   .archive {
     --rail: 2rem;
   }
@@ -472,11 +481,6 @@
     width: 1.45rem;
     height: 1.38rem;
     font-size: 0.62rem;
-  }
-  .archive-chapter,
-  .archive-case,
-  .archive-timeline {
-    scroll-margin-top: 7rem;
   }
   .archive-hero-grid {
     grid-template-columns: 1fr;
@@ -525,5 +529,9 @@
   .archive *::after {
     animation: none !important;
     transition: none !important;
+  }
+  .archive-reveal {
+    opacity: 1;
+    transform: none;
   }
 }

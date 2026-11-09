@@ -33,15 +33,31 @@ function Portfolio() {
 
     function updateChapter() {
       frame = 0;
-      const readingLine = Math.min(window.innerHeight * 0.37, 260);
-      const section = sections.find(
-        ({ section }) => section.getBoundingClientRect().top <= readingLine,
-      );
+      const viewport = window.innerHeight;
+      const readingLine = Math.min(viewport * 0.37, 260);
+      const positions = sections.map(({ id, section }) => ({
+        id,
+        section,
+        top: section.getBoundingClientRect().top,
+      }));
+      const active = positions.find(({ top }) => top <= readingLine);
+
+      for (const { section, top } of positions) {
+        // Reveal the incoming slide between the bottom and the upper third.
+        const progress = Math.min(
+          1,
+          Math.max(0, (viewport * 0.94 - top) / (viewport * 0.62)),
+        );
+        const eased = (1 - (1 - progress) ** 2).toFixed(3);
+        if (section.style.getPropertyValue("--slide-progress") !== eased) {
+          section.style.setProperty("--slide-progress", eased);
+        }
+      }
+
       const atBottom =
         window.scrollY > 0 &&
-        window.scrollY + window.innerHeight >=
-          document.documentElement.scrollHeight - 2;
-      setCurrent(atBottom ? "contact" : (section?.id ?? "intro"));
+        window.scrollY + viewport >= document.documentElement.scrollHeight - 2;
+      setCurrent(atBottom ? "contact" : (active?.id ?? "intro"));
     }
 
     function onScroll() {
