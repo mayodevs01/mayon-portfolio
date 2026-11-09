@@ -75,36 +75,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: "Mayon Thakur — Developer & StudyElo Founder" },
+        { title: "Mayon Thakur — SaaS Developer & StudyElo Founder" },
         {
           name: "description",
           content:
-            "Mayon Thakur — developer, founder of StudyElo.online and aspiring entrepreneur. Explore projects, web skills and a searchable résumé.",
+            "Mayon Thakur is a SaaS developer, first-year B.Tech Computer Science student, and founder of StudyElo.online. Explore the StudyElo case study and download his résumé.",
         },
         { name: "author", content: "Mayon Thakur" },
         {
           property: "og:title",
-          content: "Mayon Thakur — Developer & StudyElo Founder",
+          content: "Mayon Thakur — SaaS Developer & StudyElo Founder",
         },
         {
           property: "og:description",
           content:
-            "Explore the projects and programming skills of Mayon Thakur, founder of StudyElo.online.",
+            "Meet Mayon Thakur, SaaS developer and founder of StudyElo.online, and explore the story behind StudyElo.",
         },
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: "Mayon Thakur" },
         { name: "twitter:card", content: "summary_large_image" },
         {
           name: "twitter:title",
-          content: "Mayon Thakur — Developer & StudyElo Founder",
+          content: "Mayon Thakur — SaaS Developer & StudyElo Founder",
         },
         {
           name: "twitter:description",
           content:
-            "Explore the projects and programming skills of Mayon Thakur, founder of StudyElo.online.",
+            "Meet Mayon Thakur, SaaS developer and founder of StudyElo.online, and explore the story behind StudyElo.",
         },
-        { property: "og:image", content: "https://mayon.lol/profile-plush.png" },
-        { name: "twitter:image", content: "https://mayon.lol/profile-plush.png" },
+        { property: "og:image", content: "https://mayon.lol/mayon-thakur.webp" },
+        { name: "twitter:image", content: "https://mayon.lol/mayon-thakur.webp" },
       ],
       links: [
         {

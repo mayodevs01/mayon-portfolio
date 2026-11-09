@@ -1,62 +1,339 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { useEffect, useRef, useState } from 'react';
-import { Search, X, ArrowUpRight, Download, Mail, Github, Linkedin, Check, ChevronRight, ChevronDown, Volume2, Clock3, Timer, ChartNoAxesColumnIncreasing, Sparkles } from 'lucide-react';
-import './search.css';
-export const Route = createFileRoute('/')({ component: SearchPortfolio });
-function Brand({large=false,onClick}:{large?:boolean;onClick:()=>void}){return <button onClick={onClick} className={'search-brand'+(large?' large':'')} aria-label="Search Mayon home"><span className="search-prefix">Search</span><span className="brand-name">{'Mayon'.split('').map((letter,i)=><span key={i} className={'letter-'+i}>{letter}</span>)}</span></button>;}
-const sections=[
- {id:'about',group:'All',keywords:'about developer profile biography mayodevs'},
- {id:'experience',group:'Experience',keywords:'founder entrepreneur experience studyelo startup'},
- {id:'skills',group:'Skills',keywords:'skills stack programming languages javascript typescript html css react git'},
- {id:'projects',group:'Product',keywords:'projects builds websites work studyelo portfolio'},
- {id:'capabilities',group:'Skills',keywords:'services capabilities design responsive ai building websites landing pages'},
- {id:'contact',group:'Contact',keywords:'contact email linkedin github connect hire collaborate'}
-];
-const filters=['All','Product','Experience','Skills','Contact'];
-function SearchPortfolio(){
- const [intro,setIntro]=useState(true);const [query,setQuery]=useState('');const [submitted,setSubmitted]=useState('Mayon Thakur');const [filter,setFilter]=useState('All');const [copied,setCopied]=useState(false);const [replay,setReplay]=useState(0);const searchInput=useRef<HTMLInputElement>(null);const interrupted=useRef(false);const copyTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
- useEffect(()=>{if(!intro)return;interrupted.current=false;const target='Mayon Thakur';if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){setQuery(target);setIntro(false);return;}setQuery('');let index=0;let pause:ReturnType<typeof setTimeout>;const interval=setInterval(()=>{if(interrupted.current){clearInterval(interval);return;}index++;setQuery(target.slice(0,index));if(index>=target.length){clearInterval(interval);pause=setTimeout(()=>{if(!interrupted.current){setSubmitted(target);setIntro(false);}},600);}},85);return()=>{clearInterval(interval);clearTimeout(pause);};},[intro,replay]);
- useEffect(()=>()=>{if(copyTimer.current)clearTimeout(copyTimer.current);},[]);
- useEffect(()=>{function focusSearch(e:KeyboardEvent){const target=e.target as HTMLElement;if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(target.tagName)&&!target.isContentEditable){e.preventDefault();searchInput.current?.focus();searchInput.current?.select();}}window.addEventListener('keydown',focusSearch);return()=>window.removeEventListener('keydown',focusSearch);},[]);
- function search(e?:React.FormEvent){e?.preventDefault();interrupted.current=true;const text=query.trim()||'Mayon Thakur';setQuery(text);setSubmitted(text);setIntro(false);setFilter('All');window.scrollTo({top:0});}
- function home(){setIntro(true);setFilter('All');setReplay(r=>r+1);}
- async function copyEmail(){try{await navigator.clipboard.writeText('mayodevs01@gmail.com');setCopied(true);copyTimer.current=setTimeout(()=>setCopied(false),2000);}catch{window.location.href='mailto:mayodevs01@gmail.com';}}
- const terms=submitted.toLowerCase().trim().split(/\s+/).filter(Boolean);const generic=!terms.length||terms.every(t=>['mayon','thakur','mayodevs','portfolio','resume','cv'].includes(t));const visible=sections.filter(s=>(filter==='All'||s.group===filter)&&(generic||terms.some(t=>s.keywords.includes(t)||s.id.includes(t))));
- function printResume(){setSubmitted('Mayon Thakur');setQuery('Mayon Thakur');setFilter('All');setTimeout(()=>window.print(),100);}
- function jump(id:string){setSubmitted('Mayon Thakur');setQuery('Mayon Thakur');setFilter('All');setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'}),0);}
- function field(landing=false){return <form className={'search-field'+(landing?' landing-field':'')} onSubmit={search} role="search"><Search size={20} aria-hidden="true"/><input ref={landing?undefined:searchInput} aria-label="Search Mayon’s portfolio" value={query} onChange={e=>{interrupted.current=true;setQuery(e.target.value);}} placeholder="Search Mayon’s portfolio" autoComplete="off" spellCheck={false}/>{query&&<button type="button" className="clear-query" onClick={()=>{interrupted.current=true;setQuery('');}} aria-label="Clear search"><X size={18}/></button>}<kbd className="search-shortcut" aria-hidden="true">/</kbd><span className="field-divider"/><button type="submit" className="submit-query" aria-label="Search portfolio"><Search size={21}/></button></form>;}
- return <div className="mayon-search"><a className="skip-content" href="#main-content">Skip to portfolio</a>
- {intro&&<div className="search-landing"><header><span>MAYON THAKUR / PERSONAL SEARCH</span><a href="mailto:mayodevs01@gmail.com">Say hello <ArrowUpRight size={13}/></a></header><div className="landing-center"><span className="landing-kicker">ONE NAME. A FEW THINGS WORTH EXPLORING.</span><Brand large onClick={home}/><p className="landing-subtitle">A little curiosity goes a long way.</p>{field(true)}<div className="landing-actions"><button onClick={()=>search()}>Search Mayon</button><button onClick={()=>{interrupted.current=true;setQuery('Mayon Thakur');setSubmitted('Mayon Thakur');setIntro(false);}}>Skip intro ↗</button></div><span className="typing-note">Finding the person behind StudyElo<span className="typing-dots">…</span></span></div><footer><span>Designed to be explored.</span><span>Built by Mayon · mayon.lol</span></footer></div>}
- <div className="search-results" aria-hidden={intro} inert={intro?true:undefined}>
- <header className="results-header"><div className="results-top"><Brand onClick={home}/>{field()}<button className="resume-button" aria-label="Save full résumé as PDF" onClick={printResume}><Download size={16}/><span>Save résumé</span></button><a href="mailto:mayodevs01@gmail.com" className="profile-avatar" aria-label="Contact Mayon"><img src="/profile-plush.png" alt="Mayon’s glasses-wearing plush avatar"/></a></div><nav className="result-filters" aria-label="Portfolio categories">{filters.map(f=><button key={f} onClick={()=>setFilter(f)} aria-pressed={filter===f} className={filter===f?'active':''}>{f==='All'&&<Search size={13}/>} {f}</button>)}<span className="filter-note">A portfolio, made searchable.</span></nav></header>
- <main className="results-main" id="main-content"><h1 className="search-accessible-title">Mayon Thakur — personal portfolio</h1><div className="results-count">{`${visible.length} portfolio sections · Real projects, real person.`}</div>{filter==='All'&&generic&&<><section className="identity-banner" aria-labelledby="identity-title"><div className="identity-copy"><span className="eyebrow"><span className="status-dot"/> THE PERSON BEHIND THE SEARCH</span><h2 id="identity-title">Curious mind.<br/>Things <em>in the making.</em></h2><p>I'm Mayon — developer, founder of StudyElo,<br className="desktop-break"/> and an aspiring entrepreneur. Welcome to my corner of the web.</p><div className="identity-actions"><button onClick={()=>setFilter('Product')}>Explore my work <ArrowUpRight size={16}/></button><a href="mailto:mayodevs01@gmail.com">Let’s talk <ArrowUpRight size={16}/></a></div></div><div className="identity-portrait"><span className="portrait-orbit"/><img src="/profile-plush.png" alt="Mayon’s signature plush avatar wearing glasses"/><span className="portrait-caption">BIG IDEAS. BIGGER GLASSES.</span><span className="portrait-spark" aria-hidden="true">✳</span></div><div className="identity-strip"><span>01 / Developer</span><span>02 / StudyElo founder</span><span>03 / Always learning</span></div></section><AIOverview/></>}<div className="results-layout"><div className="organic-results" key={filter+submitted}>
- {visible.length===0?<div className="empty-search"><Search size={30}/><h2>No portfolio sections match “{submitted}”.</h2><p>Try projects, skills, founder, contact, or Mayon Thakur.</p><button onClick={()=>{setSubmitted('Mayon Thakur');setQuery('Mayon Thakur');setFilter('All');}}>Show full résumé</button></div>:visible.map((section,index)=><article className="result-entry" id={section.id} key={section.id} style={{animationDelay:index*130+'ms'}}>
- <ResultSource path={section.id} label={section.id==='experience'?'StudyElo / Founder':'Mayon Thakur / '+section.id.charAt(0).toUpperCase()+section.id.slice(1)}/>
- {section.id==='about'&&<><h2><a href="#about">Mayon Thakur — the person behind StudyElo</a></h2><p className="result-description">I’m a <strong>developer, founder of StudyElo.online, and aspiring entrepreneur</strong>. I turn ideas into web products and digital experiences, learning and refining as I build.</p><div className="sitelinks"><a href="#experience" onClick={e=>{e.preventDefault();jump('experience');}}>Founder story <ChevronRight size={12}/></a><a href="#skills" onClick={e=>{e.preventDefault();jump('skills');}}>Languages & tools <ChevronRight size={12}/></a><a href="#projects" onClick={e=>{e.preventDefault();jump('projects');}}>StudyElo project <ChevronRight size={12}/></a><a href="#contact" onClick={e=>{e.preventDefault();jump('contact');}}>Get in touch <ChevronRight size={12}/></a></div><div className="personal-note"><span>MY APPROACH</span><p>Learn the fundamentals. Use modern tools. Understand what you ship.</p></div></>}
- {section.id==='experience'&&<><h2><a href="https://studyelo.online/" target="_blank" rel="noopener noreferrer">Founder of StudyElo.online</a></h2><p className="result-description">Building a study productivity platform to help students stay focused, organised, and consistent. My work covers the journey from idea and interface to deployment and ongoing improvements.</p><div className="experience-card"><img className="studyelo-mark" src="/studyelo-icon.svg" alt="StudyElo logo"/><div><h3>StudyElo.online</h3><p>Founder · Study productivity</p><span>Product development · Responsive UI · SEO · Iteration</span></div><a href="https://studyelo.online/" target="_blank" rel="noopener noreferrer" aria-label="Visit StudyElo"><ArrowUpRight size={18}/></a></div></>}
- {section.id==='skills'&&<><h2><a href="#skills" onClick={e=>{e.preventDefault();jump('skills');}}>Programming languages & the tools behind the builds</a></h2><p className="result-description">Languages and tools used across my web projects. The toolbox keeps growing with each build.</p><div className="search-tech-grid">{[['javascript','JavaScript','Language'],['typescript','TypeScript','Language'],['html5','HTML','Markup'],['css3','CSS','Styling'],['react','React','UI library'],['git','Git','Version control']].map(([id,name,type])=><div key={id}><img src={'/tech/'+id+'.svg'} alt=""/><strong>{name}</strong><span>{type}</span></div>)}</div></>}
- {section.id==='projects'&&<><h2><a href="https://studyelo.online/" target="_blank" rel="noopener noreferrer">StudyElo.online — study tools for students</a></h2><StudyEloProduct/></>}
- {section.id==='capabilities'&&<><h2><a href="#capabilities">What I can help build</a></h2><p className="result-description">The work I enjoy sits between a useful idea and an experience people can actually use.</p><div className="capability-results">{[['01','Web products','Turn an idea into a usable website, then deploy and refine it.'],['02','Interfaces & landing pages','Responsive layouts, clear journeys, and visual direction.'],['03','AI-assisted experiments','Use AI tools to explore ideas, understand the output, and improve it.']].map(([n,title,body])=><div key={n}><span>{n}</span><div><h3>{title}</h3><p>{body}</p></div></div>)}</div></>}
- {section.id==='contact'&&<><h2><a href="mailto:mayodevs01@gmail.com">Let’s build something worth searching for</a></h2><p className="result-description">Have an idea, a collaboration, or a question? Here’s where to find me.</p><div className="contact-results"><a href="mailto:mayodevs01@gmail.com"><Mail size={18}/><div><strong>Email</strong><span>mayodevs01@gmail.com</span></div><ArrowUpRight size={16}/></a><a href="https://github.com/mayodevs01" target="_blank" rel="noopener noreferrer"><Github size={18}/><div><strong>GitHub</strong><span>@mayodevs01</span></div><ArrowUpRight size={16}/></a><a href="https://www.linkedin.com/in/mayon-thakur/" target="_blank" rel="noopener noreferrer"><Linkedin size={18}/><div><strong>LinkedIn</strong><span>Mayon Thakur</span></div><ArrowUpRight size={16}/></a></div></>}
- </article>)}
- </div><aside className="knowledge-panel"><div className="knowledge-art profile-photo"><img src="/profile-plush.png" alt="A plush penguin wearing black glasses, used as Mayon’s profile photo"/></div><div className="knowledge-title"><h2>Mayon Thakur</h2><span>Developer & aspiring entrepreneur</span></div><div className="knowledge-body"><p>Building <a href="https://studyelo.online/" target="_blank" rel="noopener noreferrer">StudyElo.online ↗</a> — a study productivity platform for students.</p><dl><div><dt>Founded</dt><dd>StudyElo.online</dd></div><div><dt>Focus</dt><dd>Web products & digital experiences</dd></div></dl><div className="knowledge-socials"><a href="https://github.com/mayodevs01" target="_blank" rel="noopener noreferrer"><Github size={20}/><span>GitHub</span></a><a href="https://www.linkedin.com/in/mayon-thakur/" target="_blank" rel="noopener noreferrer"><Linkedin size={20}/><span>LinkedIn</span></a><button onClick={copyEmail}>{copied?<Check size={20}/>:<Mail size={20}/>}<span>{copied?'Copied!':'Email'}</span></button></div></div><div className="knowledge-foot"><span><Check size={12}/> Personal portfolio</span><span>mayon.lol</span></div></aside></div>
- {visible.length>0&&<div className="related-searches"><h2>Keep exploring <Sparkles size={18}/></h2><div>{['Product','Skills','Experience'].map(f=><button key={f} onClick={()=>{setFilter(f);window.scrollTo({top:0,behavior:'smooth'});}}><Search size={16}/>{f==='Experience'?'Mayon’s founder experience':f==='Skills'?'Mayon’s programming skills':'Explore StudyElo.online'}<ArrowUpRight size={15}/></button>)}</div></div>}
- {filter==='All'&&generic&&<QuickAnswers/>}<footer className="results-footer"><span>Mayon Thakur © {new Date().getFullYear()}</span><span>You’ve reached the human behind the results.</span><button onClick={home}>Replay intro ↻</button></footer></main></div></div>;
-}
-function ResultSource({path,label}:{path:string;label:string}){return <div className="result-source">{path==='projects'||path==='experience'?<img className="source-favicon" src="/studyelo-icon.svg" alt="StudyElo logo"/>:<img className="source-favicon mayon-result-icon" src="/mayon-logo.svg" alt="Mayon logo"/>}<div><strong>{label}</strong><span>mayon.lol <ChevronRight size={9}/> {path}</span></div><span className="result-dots" aria-hidden="true">⋮</span></div>;}
+import { createFileRoute } from "@tanstack/react-router";
+import { ArrowDown, ArrowUp, ArrowUpRight, Download } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
+import "./archive.css";
 
-function AIOverview(){
- const [expanded,setExpanded]=useState(false);const [speaking,setSpeaking]=useState(false);
- useEffect(()=>()=>{window.speechSynthesis?.cancel();},[]);
- const summary='Mayon Thakur is an Indian computer science student, full-stack developer, and freelancer. He is currently pursuing a Bachelor of Technology in Computer Science at Dr. A.P.J. Abdul Kalam Technical University. He is the creator and developer of StudyElo.online, a study productivity platform. He has participated in his college internal Smart India Hackathon and co-authored research preprints on AI-driven recommendation systems, human perceptions of AI digital avatars, and multimodal voice generation pipelines.';
- function read(){if(!window.speechSynthesis)return;if(speaking){window.speechSynthesis.cancel();setSpeaking(false);return;}const speech=new SpeechSynthesisUtterance(summary);speech.onend=()=>setSpeaking(false);speech.onerror=()=>setSpeaking(false);setSpeaking(true);window.speechSynthesis.speak(speech);}
- return <section className={'ai-overview'+(expanded?' expanded':'')} aria-labelledby="ai-title"><div className="ai-heading"><Sparkles size={25}/><h2 id="ai-title">AI Overview</h2><button onClick={read} aria-label={speaking?'Stop reading overview':'Read overview aloud'} aria-pressed={speaking}><Volume2 size={17}/></button></div><div className="ai-layout"><div><div className="ai-copy" id="ai-copy"><p><strong>Mayon Thakur</strong> is an <span className="overview-highlight">Indian computer science student, full-stack developer, and freelancer</span>. <SourceChip/></p><h3>Profile Overview</h3><ul><li><strong>Education:</strong> He is currently pursuing a Bachelor of Technology (B.Tech) in Computer Science at Dr. A.P.J. Abdul Kalam Technical University (AKTU). <SourceChip/></li><li><strong>Projects:</strong> He is the creator and developer of <a href="https://studyelo.online/" target="_blank" rel="noopener noreferrer"><strong>StudyElo.online</strong></a>, a study productivity platform helping students stay focused, organised, and consistent. <a className="source-chip" href="https://studyelo.online/" target="_blank" rel="noopener noreferrer"><img src="/studyelo-icon.svg" alt=""/>studyelo.online</a></li><li><strong>Innovations:</strong> He has engaged in academic research and innovation, including participating in the college internal round of the <strong>Smart India Hackathon (SIH)</strong>, focusing on full-stack architecture, offline synchronization, and database management. He has also co-authored research preprints exploring AI-driven recommendation systems, human perceptions of AI digital avatars, and multimodal voice generation pipelines.</li></ul></div><button className="ai-expand" aria-expanded={expanded} aria-controls="ai-copy" onClick={()=>setExpanded(!expanded)}>{expanded?'Show less':'Show more'}<ChevronDown size={18} style={{transform:expanded?'rotate(180deg)':undefined}}/></button></div><aside className="overview-sources" aria-label="Overview sources"><a href="https://www.linkedin.com/in/mayon-thakur/" target="_blank" rel="noopener noreferrer"><span className="source-card-label"><Linkedin size={17}/>LinkedIn · Mayon Thakur</span><div><h3>Mayon Thakur’s profile</h3><p>Computer science student, developer, freelancer, and founder of StudyElo.online.</p></div><span className="linkedin-tile"><Linkedin size={27}/></span></a><a href="https://studyelo.online/" target="_blank" rel="noopener noreferrer"><span className="source-card-label"><img src="/studyelo-icon.svg" alt=""/>StudyElo.online</span><div><h3>StudyElo — Study productivity</h3><p>Study timer, Pomodoro, and study tracking tools for students.</p></div><img className="studyelo-source-tile" src="/studyelo-icon.svg" alt="StudyElo logo"/></a></aside></div></section>;
-}
-function SourceChip(){return <a className="source-chip" href="https://www.linkedin.com/in/mayon-thakur/" target="_blank" rel="noopener noreferrer"><Linkedin size={13}/>in.linkedin.com</a>;}
-function StudyEloProduct(){return <div className="product-detail"><a className="product-wordmark" href="https://studyelo.online/" target="_blank" rel="noopener noreferrer"><img src="/studyelo-wordmark.png" alt="StudyElo"/></a><a className="product-live-link" href="https://studyelo.online/" target="_blank" rel="noopener noreferrer">https://studyelo.online/ <ArrowUpRight size={16}/></a><h3>What is StudyElo?</h3><p>StudyElo is a web-based study productivity platform built to help students stay focused, organised, and consistent. It brings practical study tools into one place so students can build a routine and keep track of their effort.</p><div className="product-features"><div><Clock3 size={20}/><strong>Study timer</strong><span>Set aside time for focused study sessions.</span></div><div><Timer size={20}/><strong>Pomodoro</strong><span>Alternate focused work with regular breaks.</span></div><div><ChartNoAxesColumnIncreasing size={20}/><strong>Study tracking</strong><span>Keep track of study time and build consistency.</span></div></div><h3>My role</h3><p>Founder and developer — taking the product from idea to deployment, including responsive interfaces, content pages, SEO structure, and ongoing usability improvements.</p><a className="visit-product" href="https://studyelo.online/" target="_blank" rel="noopener noreferrer">Open StudyElo.online <ArrowUpRight size={17}/></a></div>;}
+export const Route = createFileRoute("/")({ component: Portfolio });
 
-function QuickAnswers(){return <section className="quick-answers" aria-labelledby="answers-title"><span className="eyebrow">A LITTLE MORE CONTEXT</span><h2 id="answers-title">People also ask<span>↘</span></h2>{[
-['What are you building right now?','My current focus is StudyElo.online: a study productivity platform that brings together a study timer, Pomodoro sessions, and study tracking.'],
-['What kind of work do you enjoy?','I enjoy taking ideas from a first sketch to a usable web product — especially responsive interfaces, landing pages, and practical tools.'],
-['How can we work together?','Send your idea to mayodevs01@gmail.com, or connect with me on LinkedIn. Tell me what you want to build and what you need help with.']
-].map(([question,answer])=><details key={question}><summary>{question}<ChevronDown size={18}/></summary><p>{answer}</p></details>)}</section>;}
+const chapters = [
+  { id: "intro", number: "01", title: "Introduction" },
+  { id: "projects", number: "02", title: "Featured work", nav: "Work" },
+  { id: "about", number: "03", title: "About", nav: "About" },
+  { id: "contact", number: "04", title: "Contact", nav: "Contact" },
+] as const;
+
+type Chapter = (typeof chapters)[number];
+type ChapterId = Chapter["id"];
+
+const resume = "/Mayon-Thakur-Resume.pdf";
+const studyElo = "https://studyelo.online/";
+const email = "mayodevs01@gmail.com";
+
+function Portfolio() {
+  const [current, setCurrent] = useState<ChapterId>("intro");
+
+  useEffect(() => {
+    const sections = chapters
+      .flatMap(({ id }) => {
+        const section = document.getElementById(id);
+        return section ? [{ id, section }] : [];
+      })
+      .reverse();
+    let frame = 0;
+
+    function updateChapter() {
+      frame = 0;
+      const readingLine = Math.min(window.innerHeight * 0.37, 260);
+      const section = sections.find(
+        ({ section }) => section.getBoundingClientRect().top <= readingLine,
+      );
+      const atBottom =
+        window.scrollY > 0 &&
+        window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 2;
+      setCurrent(atBottom ? "contact" : (section?.id ?? "intro"));
+    }
+
+    function onScroll() {
+      if (!frame) frame = requestAnimationFrame(updateChapter);
+    }
+
+    updateChapter();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return (
+    <div className="archive">
+      <a className="archive-skip" href="#portfolio-main">
+        Skip to content
+      </a>
+      <header className="archive-header">
+        <div className="archive-header-inner archive-wrap">
+          <a
+            className="archive-brand"
+            href="#intro"
+            aria-label="mayon.lol home"
+          >
+            <span className="archive-monogram" aria-hidden="true">
+              MT
+            </span>
+            <span>mayon.lol</span>
+          </a>
+          <nav className="archive-nav" aria-label="Portfolio chapters">
+            {chapters.map(
+              (chapter) =>
+                "nav" in chapter && (
+                  <a
+                    key={chapter.id}
+                    href={`#${chapter.id}`}
+                    aria-current={
+                      current === chapter.id ? "location" : undefined
+                    }
+                  >
+                    {chapter.nav}
+                  </a>
+                ),
+            )}
+          </nav>
+          <ResumeLink />
+        </div>
+      </header>
+
+      <main
+        id="portfolio-main"
+        className="archive-wrap archive-timeline"
+        tabIndex={-1}
+      >
+        <ChapterSection
+          chapter={chapters[0]}
+          current={current}
+          className="archive-intro"
+        >
+          <div className="archive-hero-grid">
+            <div>
+              <h1>
+                Mayon
+                <br />
+                Thakur
+              </h1>
+              <p className="archive-role">
+                SaaS developer &amp; founder of{" "}
+                <a href={studyElo}>StudyElo.online</a>
+              </p>
+              <p className="archive-lead">
+                I’m a first-year B.Tech student building software around real
+                problems, starting with how students study.
+              </p>
+              <a className="archive-link" href="#projects">
+                Explore StudyElo <ArrowDown aria-hidden="true" />
+              </a>
+            </div>
+            <figure className="archive-portrait">
+              <div className="archive-photo-frame">
+                <img
+                  src="/mayon-thakur.webp"
+                  width="760"
+                  height="1352"
+                  alt="Mayon Thakur wearing black glasses"
+                  fetchPriority="high"
+                />
+              </div>
+              <figcaption>
+                <span>Fig. 01</span>
+                <span>Mayon Thakur</span>
+              </figcaption>
+            </figure>
+          </div>
+        </ChapterSection>
+
+        <ChapterSection
+          chapter={chapters[1]}
+          current={current}
+          className="archive-work"
+        >
+          <div className="archive-work-heading">
+            <div>
+              <h2>StudyElo</h2>
+              <p className="archive-deck">
+                From starting a session to building a routine.
+              </p>
+            </div>
+            <span className="archive-project-role">Founder / Developer</span>
+          </div>
+          <div className="archive-project-grid">
+            <div className="archive-project-story">
+              <div>
+                <h3>The problem</h3>
+                <p>
+                  It’s easy to spend more time setting up a study session than
+                  getting started.
+                </p>
+              </div>
+              <div>
+                <h3>The build</h3>
+                <p>
+                  I put a Pomodoro timer, a focus room, and study-time tracking
+                  in one place.
+                </p>
+              </div>
+              <div>
+                <h3>The lesson</h3>
+                <p>
+                  The first few seconds matter. Make it easy to start, then give
+                  students a reason to come back.
+                </p>
+              </div>
+            </div>
+            <div>
+              <figure className="archive-product">
+                <img
+                  src="/studyelo-focus.webp"
+                  width="1280"
+                  height="586"
+                  alt="StudyElo’s Pomodoro focus room with a 90-minute timer and a nighttime desk backdrop"
+                  decoding="async"
+                />
+                <figcaption>
+                  <span>Fig. 02 / Pomodoro focus room</span>
+                  <span>studyelo.online</span>
+                </figcaption>
+              </figure>
+              <div className="archive-actions">
+                <a className="archive-link" href="#case-study">
+                  Read the case study <ArrowDown aria-hidden="true" />
+                </a>
+                <a className="archive-link" href={studyElo}>
+                  Visit StudyElo <ArrowUpRight aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div id="case-study" className="archive-case" tabIndex={-1}>
+            <p className="archive-label">Inside the build</p>
+            <h3>What happens after you press Start?</h3>
+            <div className="archive-case-grid">
+              <p>
+                StudyElo gives a session a beginning and an end. The focus room
+                puts the timer up front, and Pomodoro breaks give students a
+                natural point to pause before the next round. Study-time
+                tracking makes the work visible across sessions.
+              </p>
+              <p>
+                I took StudyElo from idea to deployment, working on the
+                responsive interface, study tools, and content. Once it was
+                live, I kept refining how the pieces fit together around the
+                same question: how quickly can someone get back to studying?
+              </p>
+            </div>
+          </div>
+        </ChapterSection>
+
+        <ChapterSection
+          chapter={chapters[2]}
+          current={current}
+          className="archive-about"
+        >
+          <h2>About me</h2>
+          <div className="archive-about-grid">
+            <div className="archive-about-copy">
+              <p>
+                I’m a first-year B.Tech Computer Science student at Dr. A.P.J.
+                Abdul Kalam Technical University, a SaaS developer, and the
+                founder of StudyElo.online.
+              </p>
+              <p>
+                I’ve won five hackathons. I’m looking to work with people who
+                can point to a real problem and want to build something that
+                makes it easier to solve.
+              </p>
+            </div>
+            <dl className="archive-facts">
+              <div>
+                <dt>Education</dt>
+                <dd>B.Tech Computer Science · First year</dd>
+              </div>
+              <div>
+                <dt>Hackathons</dt>
+                <dd>5 wins</dd>
+              </div>
+              <div>
+                <dt>Tools</dt>
+                <dd>TypeScript, React, Node.js, SQLite, Git</dd>
+              </div>
+            </dl>
+          </div>
+        </ChapterSection>
+
+        <ChapterSection
+          chapter={chapters[3]}
+          current={current}
+          className="archive-contact"
+        >
+          <h2>Let’s build something useful.</h2>
+          <p className="archive-lead">
+            Have a problem you’re working on? Tell me who it affects and what
+            you’ve tried so far.
+          </p>
+          <a className="archive-link archive-email" href={`mailto:${email}`}>
+            {email} <ArrowUpRight aria-hidden="true" />
+          </a>
+          <div className="archive-actions">
+            <a className="archive-link" href="https://github.com/mayodevs01">
+              GitHub <ArrowUpRight aria-hidden="true" />
+            </a>
+            <a
+              className="archive-link"
+              href="https://www.linkedin.com/in/mayon-thakur/"
+            >
+              LinkedIn <ArrowUpRight aria-hidden="true" />
+            </a>
+            <ResumeLink />
+          </div>
+        </ChapterSection>
+      </main>
+
+      <footer className="archive-footer archive-wrap">
+        <span>© {new Date().getFullYear()} Mayon Thakur</span>
+        <a className="archive-link" href="#intro">
+          Back to top <ArrowUp aria-hidden="true" />
+        </a>
+      </footer>
+    </div>
+  );
+}
+
+function ResumeLink() {
+  return (
+    <a className="archive-resume" href={resume} download>
+      Download résumé <Download size={15} aria-hidden="true" />
+    </a>
+  );
+}
+
+function ChapterSection({
+  chapter,
+  current,
+  className,
+  children,
+}: {
+  chapter: Chapter;
+  current: ChapterId;
+  className: string;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      id={chapter.id}
+      className={`archive-chapter ${className}`}
+      tabIndex={-1}
+      data-current={current === chapter.id}
+      aria-labelledby={`chapter-${chapter.id}`}
+    >
+      <div className="archive-chapter-label">
+        <span className="archive-chapter-number">{chapter.number}</span>
+        <span id={`chapter-${chapter.id}`} className="archive-label">
+          / {chapter.title}
+        </span>
+      </div>
+      <div className="archive-reveal">{children}</div>
+    </section>
+  );
+}
