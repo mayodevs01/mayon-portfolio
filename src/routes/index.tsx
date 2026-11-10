@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef, type FormEvent, type TouchEvent } from "react";
+import { Moon, Sun } from "lucide-react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -35,6 +36,7 @@ const toolLogos: Record<string, string> = {
   "PDF.js": "pdfjs",
 };
 function Portfolio() {
+  const [dark, setDark] = useState(false);
   const [card, setCard] = useState(0);
   const [direction, setDirection] = useState("forward");
   const [name, setName] = useState("");
@@ -104,11 +106,21 @@ function Portfolio() {
       encodeURIComponent("Hi Mayon,\n\n" + idea.trim() + "\n\n" + name.trim());
   }
   return (
-    <div className="deck-site">
+    <div className={"deck-site" + (dark ? " theme-dark" : "")}>
       <header className="deck-header">
         <a href="/" className="deck-brand">
           MT <span>MAYON.LOL</span>
         </a>
+        <button
+          className="deck-theme"
+          type="button"
+          onClick={() => setDark(!dark)}
+          aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+          aria-pressed={dark}
+        >
+          {dark ? <Sun size={17} /> : <Moon size={17} />}
+          {dark ? "Light mode" : "Dark mode"}
+        </button>
       </header>
       <main className="deck-main">
         <div className="deck-topline">
@@ -282,16 +294,23 @@ function Portfolio() {
                   <Linkedin />
                   <span>LINKEDIN / PROFILE</span>
                 </div>
-                <div className="deck-profile-banner" />
+                <div className="deck-profile-banner">
+                  <span>BUILD THINGS THAT MATTER.</span>
+                  <span>STUDENT · BUILDER · FOUNDER</span>
+                </div>
                 <div className="deck-profile">
                   <img src="/mayon-thakur.webp" alt="Mayon Thakur" />
                   <div>
                     <h2>Mayon Thakur</h2>
                     <p className="deck-subtitle">
-                      SaaS developer · Founder of StudyElo.online
+                      SaaS Developer &amp; Founder
                     </p>
                   </div>
                 </div>
+                <p className="deck-profile-headline">
+                  Building StudyElo.online · First-year B.Tech student · Open to
+                  building meaningful products with ambitious teams.
+                </p>
                 <p>
                   First-year B.Tech Computer Science student at Dr. A.P.J. Abdul
                   Kalam Technical University. Building practical tools for
@@ -299,8 +318,10 @@ function Portfolio() {
                   problems.
                 </p>
                 <div className="deck-profile-details">
-                  <span>StudyElo · Founder</span>
-                  <span>Greater Delhi Area</span>
+                  <span>
+                    Dr. A.P.J. Abdul Kalam Technical University, Lucknow
+                  </span>
+                  <span>Creator of StudyElo.online</span>
                   <span>5 hackathon wins</span>
                 </div>
                 <a

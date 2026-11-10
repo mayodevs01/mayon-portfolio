@@ -697,3 +697,138 @@
 .deck-dots button:disabled {
   cursor: default;
 }
+
+/* Theme switch and LinkedIn profile details */
+.deck-header {
+  gap: 12px;
+}
+.deck-theme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 13px;
+  border: 2px solid var(--black);
+  border-radius: 7px;
+  background: #c3b1ff;
+  font:
+    700 12px "Space Grotesk",
+    sans-serif;
+  box-shadow: 3px 3px 0 var(--black);
+  cursor: pointer;
+}
+.deck-theme:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--black);
+}
+.deck-site.theme-dark {
+  --black: #f1f1ec;
+  background-color: #11151b;
+  background-image: radial-gradient(#333a43 0.8px, transparent 0.8px);
+  color: #f3f1eb;
+}
+.theme-dark .deck-header {
+  border-color: #555b64;
+}
+.theme-dark .deck-brand span {
+  border-color: #d5ff5f;
+}
+.theme-dark .deck-topline > span:first-child {
+  background: #d5ff5f;
+  color: #15171a;
+}
+.theme-dark .deck-card {
+  --card-color: #202630;
+  background: #202630;
+  color: #f3f1eb;
+}
+.theme-dark .deck-card[data-card="1"] {
+  --card-color: #29331e;
+  background: #29331e;
+}
+.theme-dark .deck-card[data-card="2"] {
+  --card-color: #292333;
+  background: #292333;
+}
+.theme-dark .deck-card[data-card="3"] {
+  --card-color: #202c36;
+  background: #202c36;
+}
+.theme-dark .deck-card[data-card="4"] {
+  --card-color: #202630;
+  background: #202630;
+}
+.theme-dark .deck-card[data-card="5"] {
+  --card-color: #36271f;
+  background: #36271f;
+}
+.theme-dark .deck-card p,
+.theme-dark .deck-card .deck-note {
+  color: #c3c5c9;
+}
+.theme-dark .deck-card .deck-subtitle {
+  color: #f3f1eb;
+}
+.theme-dark .deck-tag,
+.theme-dark .deck-repos a {
+  background: #151a20;
+  color: #f3f1eb;
+  border-color: #707a84;
+}
+.theme-dark .deck-profile-banner {
+  color: #17191b;
+}
+.theme-dark .deck-profile-details span {
+  background: #171d25;
+  border-color: #68737d;
+}
+.theme-dark .deck-mail input,
+.theme-dark .deck-mail textarea {
+  background: #171d25;
+  color: #f3f1eb;
+  border-color: #87909a;
+}
+.theme-dark .deck-footer {
+  color: #c3c5c9;
+}
+.theme-dark .deck-dots button:after {
+  background: #747982;
+}
+.theme-dark .deck-dots button[aria-current]:after {
+  background: #d5ff5f;
+}
+.deck-profile-banner {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  color: #17191b;
+  font:
+    700 10px "Space Grotesk",
+    sans-serif;
+  letter-spacing: 0.8px;
+}
+.deck-profile-headline {
+  margin: 14px 0;
+  padding: 12px 14px;
+  background: #e9f4fa;
+  border-left: 4px solid #3987ad;
+  color: #30343a !important;
+  font-size: 13px !important;
+}
+.theme-dark .deck-profile-headline {
+  background: #1e3440;
+  color: #eef4f6 !important;
+}
+@media (max-width: 700px) {
+  .deck-header {
+    flex-wrap: wrap;
+  }
+  .deck-theme {
+    min-height: 38px;
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+}
