@@ -832,3 +832,60 @@
     font-size: 10px;
   }
 }
+
+/* Keep text readable on the bright controls and portrait stickers. */
+.theme-dark .deck-theme,
+.theme-dark .deck-controls > button,
+.theme-dark .deck-outline,
+.theme-dark .deck-sticker,
+.theme-dark .deck-intro figcaption {
+  color: #18191b;
+}
+.theme-dark .deck-theme,
+.theme-dark .deck-controls > button,
+.theme-dark .deck-outline {
+  border-color: #18191b;
+  box-shadow: 3px 3px 0 #000;
+}
+.theme-dark .deck-intro figure,
+.theme-dark .deck-portrait,
+.theme-dark .deck-sticker {
+  border-color: #18191b;
+}
+.theme-dark .deck-link:hover {
+  color: #18191b;
+}
+.theme-dark .deck-card h3 {
+  color: #dfedc2;
+}
+.theme-dark .deck-mail input::placeholder,
+.theme-dark .deck-mail textarea::placeholder {
+  color: #aeb7c2;
+  opacity: 1;
+}
+.theme-dark .deck-activity span {
+  background: #38414c;
+}
+.theme-dark .deck-activity [data-level="1"] {
+  background: #58733b;
+}
+.theme-dark .deck-activity [data-level="2"] {
+  background: #7ea84b;
+}
+.theme-dark .deck-activity [data-level="3"] {
+  background: #a4cf62;
+}
+.theme-dark .deck-activity [data-level="4"] {
+  background: #d5ff5f;
+}
+.theme-dark .deck-tag img {
+  background: #f7f7f2;
+  border-radius: 4px;
+  padding: 2px;
+}
+.theme-dark .deck-site :focus-visible {
+  outline-color: #c3b1ff;
+}
+.theme-dark {
+  color-scheme: dark;
+}

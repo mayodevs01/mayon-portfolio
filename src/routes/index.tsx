@@ -36,7 +36,25 @@ const toolLogos: Record<string, string> = {
   "PDF.js": "pdfjs",
 };
 function Portfolio() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() => {
+    try {
+      const saved = localStorage.getItem("mayon-theme");
+      return saved
+        ? saved === "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    } catch {
+      return false;
+    }
+  });
+  function toggleTheme() {
+    const next = !dark;
+    setDark(next);
+    try {
+      localStorage.setItem("mayon-theme", next ? "dark" : "light");
+    } catch {
+      /* Storage may be unavailable. */
+    }
+  }
   const [card, setCard] = useState(0);
   const [direction, setDirection] = useState("forward");
   const [name, setName] = useState("");
@@ -114,7 +132,7 @@ function Portfolio() {
         <button
           className="deck-theme"
           type="button"
-          onClick={() => setDark(!dark)}
+          onClick={toggleTheme}
           aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
           aria-pressed={dark}
         >
